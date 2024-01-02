@@ -1,18 +1,22 @@
 ---
-layout: page
+layout: default
 title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+Hello, Thank you for visit my Github Pages.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+This is Kishore Kota, I am an experienced Engineer, Architect and Leader in Financial Industry. I have worked in many different technologies over the last 20+ years, worked in Mainframe Modernization, Java, Spring Framewrork, J2EE, WebSphere, JS, AngularJS, PCF, AWS, Kubernetes, MicroServices, App Migration, Event Driven Architecture...etc. 
 
 
-[jekyll-organization]: https://github.com/jekyll
+[LinkedIn Profile](https://www.linkedin.com/in/kishorekkota/)
+
+[SpringOne Presentation on Testing Microservices](https://www.youtube.com/watch?v=IKbGYEXBQiU)
+
+### Certification
+
+- Certified Java 5 Programmer.
+- Certified Websphere Advanced Administrator.
+- AWS Certified Solution Architect - Associate.
+- AWS Certified Cloud Practitioner.
+- TMV Certified Vault 
