@@ -5,7 +5,7 @@ author: Kishore Kota
 ---
 
 
-### Kafka in Enterprise Environments: Shared vs. Dedicated Infrastructure Models
+### Kafka in Enterprise Environments: Shared vs. Dedicated Infrastructure Models ( WIP )
 
 ## Introduction
 This document aims to provide a comprehensive comparison of using Apache Kafka in a shared infrastructure model versus a dedicated infrastructure model for each team within an enterprise.
