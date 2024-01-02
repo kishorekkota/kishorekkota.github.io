@@ -1,5 +1,6 @@
+# Kafka Deployment Model
 
-# Kafka in Enterprise Environments: Shared vs. Dedicated Infrastructure Models
+## Kafka in Enterprise Environments: Shared vs. Dedicated Infrastructure Models
 
 ## Introduction
 This document aims to provide a comprehensive comparison of using Apache Kafka in a shared infrastructure model versus a dedicated infrastructure model for each team within an enterprise.
