@@ -74,9 +74,12 @@ Comparison of shared vs. dedicated models in terms of cost, performance, securit
 
 | Criteria         | Shared Tenancy | Dedicated Tenancy | Notes |
 |------------------|---------------------|----------------------|-----------------|
-| Cost             | [x]             | ...                  | ...             |
-| Performance  | ...                 | [x]                 | ...             |
-| Reliability              | ...                 | [x]                | ...             |
+| Cost             |  ✅         | ...                  | ...             |
+| Performance  | ...                 | ✅             | ...             |
+| Reliability              | ...                 | ✅             | ...             |
+| Availability | ... | ✅  | |
+| Security | ... | ✅ | |
+| Customization | ...| ✅ | |
 
 
 
