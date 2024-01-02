@@ -1,3 +1,7 @@
+---
+layout: default
+title: Kafka Deployment Model
+---
 
 
 ## Kafka in Enterprise Environments: Shared vs. Dedicated Infrastructure Models
