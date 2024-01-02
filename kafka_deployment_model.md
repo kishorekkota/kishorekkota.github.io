@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Kafka Deployment Model
+author: Kishore Kota
 ---
 
 
@@ -47,7 +48,7 @@ Apache Kafka, while not inherently designed for multitenancy, possesses features
 
 #### Cons
 - Risk of Resource Contention
-  * As the resource limits are not supported by Kakfa deployment model, this is a possible scenario - a specific teams deployment may cause resource exchaustion due to incorect planning or unexpected scenario.  
+   * As the resource limits are not supported by Kakfa deployment model, this is a possible scenario - a specific teams deployment may cause resource exchaustion due to incorect planning or unexpected scenario.  
 - Limited Customization
   * Shared infra limits all teams to be on the same Kafka version and limits any customization, or some use cases might be requiring higher or lower replication factor or availability needs being different, etc.
 - Potential Security Concerns
@@ -56,16 +57,19 @@ Apache Kafka, while not inherently designed for multitenancy, possesses features
 ### Dedicated Infrastructure Model
 #### Pros
 - Customization
- * Teams have authroity to defined Kafka infrastructure based on the specific availability and realiability needs.
+  * Teams have authroity to defined Kafka infrastructure based on the specific availability and realiability needs.
 - Enhanced Security
- * Establishes isolation of Kafka between teams thus limiting unautherized access exposure. 
+  * Establishes isolation of Kafka between teams thus limiting unautherized access exposure. 
 - Performance Reliability
- * Dedicated resource ensure teams are have dedicated capacity for running the workloads.
+  * Dedicated resource ensure teams are have dedicated capacity for running the workloads.
 
 #### Cons
 - Higher Costs
+  * Dedicate capacity for each team limits overall resource sharing and needing to provision more resources causing higher operational cost.
 - Increased Maintenance Effort
+  * Each team would need to have capacity dedicated support and maintain infrastructure associated with Kafka. Managed service approach would limit the cost of operational support, nonetheless this would be a responsibility of Product Team.
 - Underutilization of Resources
+  * Idel resources will end up with unutilised capacity, using up operational cost regardless of usage.
 
 ### Comparative Analysis
 Comparison of shared vs. dedicated models in terms of cost, performance, security, scalability, and maintenance.
@@ -75,11 +79,11 @@ Comparison of shared vs. dedicated models in terms of cost, performance, securit
 | Criteria         | Shared Tenancy | Dedicated Tenancy | Notes |
 |------------------|---------------------|----------------------|-----------------|
 | Cost             |  ✅         |                   | Cost of Infra Structure and Support           |
-| Performance  | ...                 | ✅             |             |
-| Reliability              | ✅              | ✅             | ...             |
+| Performance  |               | ✅             |             |
+| Reliability              | ✅              | ✅             |          |
 | Availability | ✅ | ✅  | |
-| Security | ... | ✅ | |
-| Customization | ...| ✅ | Ability to customize various configuration options.|
+| Security |  | ✅ | |
+| Customization | | ✅ | Ability to customize various configuration options.|
 
 
 
@@ -89,3 +93,7 @@ Suggestions based on different enterprise sizes and needs, with decision factors
 
 ### Conclusion
 Summary of key findings and final thoughts.
+
+
+### Credits
+ChatGPT - Some of the information generated/gathered using ChatGPT.
