@@ -53,6 +53,8 @@ Apache Kafka, while not inherently designed for multitenancy, possesses features
   * Shared infra limits all teams to be on the same Kafka version and limits any customization, or some use cases might be requiring higher or lower replication factor or availability needs being different, etc.
 - Potential Security Concerns
   * Does not enforce RBAC at the topic level, this can lead to unauthorized consumption of a topic. Also, these will end up adding as requirement for infrastructure to enforce prior autherization of events as part of consumer onboarding.
+- Maintainability
+  * Harder to maintain as this model is a monolithic deployment model for proiving eventing capability for an enterprise. As any version upgrades requires large planning and coordination among many different teams, execution of these version upgrades is much harder in this deployment model. 
 
 ### Dedicated Infrastructure Model
 #### Pros
