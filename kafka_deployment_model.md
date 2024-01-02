@@ -86,12 +86,19 @@ Comparison of shared vs. dedicated models in terms of cost, performance, securit
 | Availability | ✅ | ✅  | |
 | Security |  | ✅ | |
 | Customization | | ✅ | Ability to customize various configuration options.|
+| Maintainability| | ✅  ||
+
 
 
 
 
 ### Recommendations
 Suggestions based on different enterprise sizes and needs, with decision factors for consideration.
+
+#### Influencing Factors
+- If the eventing is used for transaction procerssing, then it requires establishing strict SLAs to support customer journey needs and hence Performance will be a key aspect for Kafka deployment model.
+
+- If the workloads deploying have varying degree of needs, then superceding requirement will play vital role in establishing overall Availability and Reliability needs. One size fits all solution, which will endup over provisioning capacity needs for some of the use cases.
 
 ### Conclusion
 Summary of key findings and final thoughts.
