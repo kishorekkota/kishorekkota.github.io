@@ -31,7 +31,9 @@ There are 2 key properties that distinguish LLms from other language models. One
 
 AN LLM task is to do word prediction. In other words, given a sentence or sequence of words, it needs predict next word.
 
-Interestingly, this is the same way many Language Models have been trained in the past with GPT
+Interestingly, this is the same way many Language Models have been trained in the past with GPT. When a language model gets beyond a certain size 10B parameters, these emergent abilities, such as zero shot learning, can start to pop up.
+
+**Size matter in LLM, perhaps training data plays vital roles in knowledge, similar to how human learn based on past experiences, same with LLM.**
 
 
 
