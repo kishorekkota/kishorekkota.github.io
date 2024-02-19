@@ -36,6 +36,22 @@ Interestingly, this is the same way many Language Models have been trained in th
 **Size matter in LLM, perhaps training data plays vital roles in knowledge, similar to how human learn based on past experiences, same with LLM.**
 
 
+### Different Use Cases of LLM
+
+Although there are countless potential use cases for LLM, they can be broadly categorized into three distinct types.
+
+- Prompt Engineering
+
+- Model Fine tuning
+  
+  This is the process where pre-trained models undergoes a second phase of training, fine tuning, where the trained model learns about domain specific data set.
+
+  This process allows customization of model to meet specific needs or can improve performance based on respective application. 
+
+
+- 
+
+
 
 # Implementing a Simple Language Model
 
