@@ -4,6 +4,9 @@ layout: home
 nav_order: 4
 ---
 
+TODO
+
+(All of this is rough work and not organized well.)
 
 ## Key Terminology
 
@@ -52,6 +55,17 @@ Although there are countless potential use cases for LLM, they can be broadly ca
 - 
 
 
+
+
+### What is BERT in LLM ?
+
+BERT is Bidirectional Encoder Representations from Transformers is a new NLP model and a specific type of LLM. This is developed by Google and is bidirectional in nature as the name suggest. 
+
+- This can Read entire sequence of works at once, which allows the model to understand the context of a word based on all of its sourrouding vs just the Left or Right to it. **BiDirectional Context**
+
+- BERT is based on the transformation architecture, which relies on attention mechanisms to capture the influence of different words on each other. Can effectively handle large amount of text and understand the nuanced meaning of words in different contexts.
+
+- 
 
 # Implementing a Simple Language Model
 
@@ -110,3 +124,8 @@ inputs = tokenizer("Your input text here", return_tensors="pt")
 outputs = model(**inputs, labels=inputs["input_ids"])
 loss = outputs.loss
 loss.backward()
+
+
+
+### Building an LLM From Scratch
+

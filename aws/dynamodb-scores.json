@@ -1,0 +1,14 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Stmt1709610852796",
+        "Action": "dynamodb:*",
+        "Effect": "Allow",
+        "Resource": [
+          "arn:aws:dynamodb:us-east-2:*:table/scores",
+          "arn:aws:dynamodb:us-east-2:*:table/scores/index/*"
+        ]
+      }
+    ]
+  }
