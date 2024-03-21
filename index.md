@@ -15,10 +15,10 @@ This is Kishore Kota. I am an experienced Engineer, Architect, and Leader in the
 ### Certification
 
 - Certified Java 5 Programmer.
-- Certified WebSphere Advanced Administrator.
-- AWS Certified Solutions Architect - Associate.
-- AWS Certified Cloud Practitioner.
-- TMV Certified Vault 
+- Certified WebSphere Advanced Administrator
+- AWS Certified Solutions Architect - Associate
+- AWS Certified Cloud Practitioner
+- TMV Certified Vault Architect
 
 ## Domain Expertise
 
@@ -28,7 +28,11 @@ I have extensively worked in Credit Card Origination, having done migrations fro
 
 ### Core Banking 
 
-Small stint in Core Banking leveraging Thought Machine Vault. Most of my experience is learning-oriented about Account Creation, Transaction Posting, and Settlement process. 
+Small stint in Core Banking leveraging Thought Machine Vault. Most of my experience is learning-oriented about Account Management, Transaction Management, and Settlement process.
+- Real Time Posting Via Async Processing.
+- Settlement process for Interest Calculation, Floats and Holds.
+- API Extensions Patterns.
+
 
 ### Contact Center
 
