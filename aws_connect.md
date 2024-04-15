@@ -158,6 +158,60 @@ Create Routing Profile to attach Queues.
 
 User Creation:
 
+
 Permission; Create Permission
 
 - 
+
+
+Contact Flows
+
+A Contact Flow defines how a customer experience your contact center from start to finish. 
+
+
+
+
+Amazon Lex Bot for creating Voice based NLU to capture customer Intent and execute respective flow.
+
+
+
+Amazon Lex Bot integration to Contact Flow.
+
+
+
+Build a Dynamic Contact Flow
+
+Create AWS Lambda Role and Policy for DynamoDB Access.
+
+Create DynamoDB Table
+
+Create and Test AWS Lambda Function
+
+
+
+
+
+
+
+
+
+## Cost Structure
+
+This section of the page is intended for totla cost of ownership AWS Connect. Type of Cost considered in this section includes..
+
+- Infra Structure
+  * Any Fixed Cost Associated with provisioned resources.
+- Pay Per Use Cost
+  * Define Pay Per Use Cost.
+  * Per Call Telephony Cost, Serverless Cost..etc
+- Cost of Maintenance 
+  * Cost of Managing Platform, if any.
+- Cost of Application Development
+  * Cost of Application Team deploying using AWS Connect. 
+  * Will touch on different types of work needed from App Dev from enterprise standpoint.
+
+
+
+### Types Of Cost Associate with AWS Connect
+
+- Telephony Cost
