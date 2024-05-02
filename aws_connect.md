@@ -210,8 +210,17 @@ This section of the page is intended for totla cost of ownership AWS Connect. Ty
   * Cost of Application Team deploying using AWS Connect. 
   * Will touch on different types of work needed from App Dev from enterprise standpoint.
 
-
-
 ### Types Of Cost Associate with AWS Connect
 
 - Telephony Cost
+
+
+
+## AWS Connect Features
+
+- **AWS LEX** NLP
+- **AWS Polly** TTS
+- **AWS Connect Task** route work to the right agents
+- **AWS WFM** forecasting, capacity planning, and scheduling
+- **AWS Connect Analytics** Analytics, insights, and optimization
+- **Amazon Connect Contact Lens** Amazon Connect Contact Lens provides contact center analytics and quality management 
