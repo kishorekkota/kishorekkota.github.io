@@ -1,3 +1,10 @@
+---
+title: Contact Center
+layout: home
+nav_order: 8
+---
+
+
 # All about Call Center Terminology
 
 In this article, we will talk about some of the key terminology associated with Call Center Stack.
@@ -49,9 +56,21 @@ With ACD - you can distribute phone calls based on claler ID, business hours, cu
 
 Unified Communication Integration
 
+<<<<<<< HEAD:call_center_terminology,md
 
 Unified Communication - UCaaS is the solution that looks after your calls messaging, and video. 
 
+=======
+Unified Communication or UCaaS is the soltuoin that looks after your calls, messaging and video.
+
+### SIPREC
+
+**SIP Recording**
+
+The Session Recording Protocol is used for establishing an active recording session and reporting of the metadata of the communication session.
+
+**Session Recording Server** SRS is a SI{}
+>>>>>>> e041b64109a5f6822f8e2fed08d8650743483ec9:call_center_terminology.md
 
 
 
