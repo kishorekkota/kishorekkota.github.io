@@ -1,3 +1,10 @@
+---
+title: Contact Center
+layout: home
+nav_order: 8
+---
+
+
 # All about Call Center Terminology
 
 In this article, we will talk about some of the key terminology associated with Call Center Stack.
