@@ -56,7 +56,6 @@ With ACD - you can distribute phone calls based on claler ID, business hours, cu
 
 Unified Communication Integration
 
-<<<<<<< HEAD:call_center_terminology,md
 
 Unified Communication - UCaaS is the solution that looks after your calls messaging, and video. 
 
