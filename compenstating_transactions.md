@@ -1,7 +1,7 @@
 ---
 title: Compensating Transactions
 layout: home
-parent: Microservice
+parent: Microservices
 ---
 ## Compensating Transactions
 
