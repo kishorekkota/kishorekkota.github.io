@@ -1,5 +1,5 @@
 ---
-title: AWS Connect Concepts
+title: AWS Connect 
 layout: home
 nav_order: 9
 ---

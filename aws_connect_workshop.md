@@ -2,6 +2,7 @@
 title: AWS Connect Workshop
 layout: home
 nav_order: 8
+parent: AWS Connect
 ---
 
 
