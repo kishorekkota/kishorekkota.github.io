@@ -3,6 +3,7 @@ layout: default
 title: Kubernetes Tenancy
 author: Kishore Kota
 nav_order: 8
+parent: Kubernetes
 ---
 
 In this document, we will conduct a comprehensive comparison of different Tenancy Models for Kubernetes clusters. This analysis is particularly useful when these clusters are utilized across various product teams within an enterprise setting.

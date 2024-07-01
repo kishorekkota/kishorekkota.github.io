@@ -3,6 +3,7 @@ layout: default
 title: Microservices
 author: Kishore Kota
 nav_order: 7
+has_children: true
 ---
 
 # Exploring the Depths of Microservices Architecture: Trends, Patterns, and Best Practices (WIP)

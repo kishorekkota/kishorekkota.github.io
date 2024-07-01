@@ -1,3 +1,12 @@
+---
+layout: default
+title: Kubernetes 
+author: Kishore Kota
+nav_order: 8
+has_content: true
+---
+
+
 ## All ABbout Kubernetes
 
 ### Key Components
@@ -5,7 +14,6 @@
 API Server
 
 Frontend for Kubernetes for communicating with Kubernetes clusters
-
 
 eTCD
 
