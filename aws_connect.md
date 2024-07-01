@@ -20,6 +20,11 @@ Below are some of the key functions from AWS Connect, we will also touch on othe
 
 ### Queues
 
+Queues are fundamental concepts with in Amazon Connect. There are different categories of Queue.
+
+- **Standard Queue**, where contacts wait before they are routed to an Agent. It is primary queue type where incomding calls or contacts placed initially.
+
+- **Agent Queue**, these are used to route contact to specific qgent based on skill set. Contact in agent queue are given higher priority than standard queues.
 
 ### Routing Profiles
 
