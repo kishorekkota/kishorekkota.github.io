@@ -2,7 +2,7 @@
 layout: home
 title: Kafka Quick Read
 author: Kishore Kota
-
+parent: Kafka
 nav_order: 2
 ---
 

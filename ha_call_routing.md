@@ -1,6 +1,7 @@
 ---
 title: HA Call Routing
 layout: home
+parent: Contact Center
 ---
 
 

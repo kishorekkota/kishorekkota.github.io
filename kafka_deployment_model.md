@@ -3,6 +3,7 @@ layout: home
 title: Kafka Deployment Model
 author: Kishore Kota
 nav_order: 3
+parent: Kafka
 ---
 
 
