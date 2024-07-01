@@ -6,7 +6,7 @@ nav_order: 1
 
 Hello, Thank you for visiting my Github Pages.
 
-This is Kishore Kota. I am an experienced Engineer, Architect, and Leader in the Financial Industry. I have worked with many different technologies over the last 20+ years, including Mainframe Modernization, Java, Spring Framework, J2EE, WebSphere, JavaScript, AngularJS, PCF, AWS, Kubernetes, MicroServices, App Migration, Event-Driven Architecture, etc. 
+This is Kishore K Kota. I am an experienced Engineer, Architect, and Leader in the Financial Industry. I have worked with many different technologies over the last 20+ years, including Mainframe Modernization, Java, Spring Framework, J2EE, WebSphere, JavaScript, AngularJS, PCF, AWS, Kubernetes, MicroServices, App Migration, Event-Driven Architecture, etc. 
 
 [LinkedIn Profile](https://www.linkedin.com/in/kishorekkota/)
 
