@@ -12,6 +12,8 @@ This is Kishore Kota. I am an experienced Engineer, Architect, and Leader in the
 
 [SpringOne Presentation on Testing Microservices](https://www.youtube.com/watch?v=IKbGYEXBQiU)
 
+
+
 ### Certification
 
 - Certified Java 5 Programmer.

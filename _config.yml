@@ -7,3 +7,4 @@ url: https://kishorekota.github.io
 
 plugins:
  - jekyll-seo-tag
+ - jekyll-default-layout
