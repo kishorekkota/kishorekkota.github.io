@@ -2,6 +2,7 @@
 title: AWS Connect 
 layout: home
 nav_order: 9
+has_children: true
 ---
 
 This artcile discusses about various features with in AWS Connect with details around how they fit with in a Contact Center Implementations.
