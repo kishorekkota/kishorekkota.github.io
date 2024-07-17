@@ -10,3 +10,9 @@ MFE (Micro FrontEnd) are really cool new invention every since Web 2.0 evolved, 
 
 Lets dive into the steps for building a Microfront END.
 
+
+
+Create a container app first, which would be center panel in our Micro Frontend.
+
+npx create-react-app container-app
+
