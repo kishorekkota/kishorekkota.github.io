@@ -1,0 +1,7 @@
+ApiVersion: v1
+kind: Replicaset
+metadata:
+  name: replicaset
+
+
+  
