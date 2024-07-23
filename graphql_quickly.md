@@ -71,6 +71,17 @@ Query's are built around;
 - Fragments.
 - Variable.
 
+**Schema** 
+
+A Schema, define stricture of the data that need to be fecthed via GraphQL. It defines type of the data that can either be queried or mutaed. It contains relationship between different types and operations that can be performed.
+
+
+**Mutation**
+
+A Mutation is type of operation in GrapQL which allows data to be modified. This is mainly intended for Creating, Updaating and Deleting.
+
+Key Characteristics of 
+
 
 
 
