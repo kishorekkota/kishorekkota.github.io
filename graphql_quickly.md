@@ -1,7 +1,7 @@
 ---
 layout: home
-nav_order: 8
-name: Graph QL
+nav_order: 10
+title: Graph QL
 ---
 
 ## Why I wrote this page ?
