@@ -129,3 +129,9 @@ loss.backward()
 
 ### Building an LLM From Scratch
 
+
+
+Generative Pre Trained Transformer
+
+A type of Auto Regressive langugae model, pre trained on diverse test data nd fine tuned for specific tasks.
+

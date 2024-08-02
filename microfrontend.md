@@ -16,3 +16,7 @@ Create a container app first, which would be center panel in our Micro Frontend.
 
 npx create-react-app container-app
 
+install dependencies
+
+npm install --save react-app-rewired html-webpack-plugin
+npm install --save-dev webpack webpack-cli webpack-dev-server
