@@ -52,3 +52,10 @@ Amazon Lex can be used with a streaming API or request - response API.
 
 When integrating with Connect, it uses Streaming API.
 
+When using text chatbot, you will use a request - response api.
+
+#### Technical Concepts with Lex
+
+
+
+

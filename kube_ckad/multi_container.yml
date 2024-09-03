@@ -4,8 +4,7 @@ metadata:
   name: yellow
 spec:
   containers:
-  - name: lemon
-    image: busybox
-  - name: gold
-    image: redis
-
+    - name: lemon
+      image: busybox
+    - name: gold
+      image: redis
