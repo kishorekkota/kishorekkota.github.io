@@ -1,4 +1,13 @@
 # Amazon Connect Contact Flow Types
+---
+title: Contact Flow
+layout: home
+nav_order: 9
+has_children: true
+parent: AWS Connect
+---
+
+
 
 Amazon Connect offers various types of **Contact Flows** tailored for different purposes. Each flow type manages specific parts of the customer journey.
 
