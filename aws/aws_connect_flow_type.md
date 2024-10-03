@@ -2,8 +2,6 @@
 ---
 title: Contact Flow
 layout: home
-nav_order: 9
-has_children: true
 parent: AWS Connect
 ---
 
