@@ -15,10 +15,10 @@ Below are the key details that influence vector DB Capacity needs for an AI Appl
 
 Google Vector DB Smallest is sized as 2 CPU and 8 GB RAM with flexible storage options.
 
-Hertzner 2 cpu	8 GB -> $16
-Akamai   2 cpu  4 GB -> $67
-Google   2 cpu  8 GB -> $66 
-(e2 shared core instances recommended for small workload, which could be even cheaper)
+Hertzner 2 cpu	8 GB -> $16 <br>
+Akamai   2 cpu  4 GB -> $67 <br>
+Google   2 cpu  8 GB -> $66 <br>
+(e2 shared core instances recommended for small workload, which could be even cheaper) <br>
 (storage cost @ $3 per GB per month)
 (2million embedding with 100 QPS - queries per second with 128 Dimension will cost about $68 using e2-standard-2 instance)
 
