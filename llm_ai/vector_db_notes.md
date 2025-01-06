@@ -34,3 +34,11 @@ Overall google vector search pricing is very competitive to our pricing w/ Akama
 
 Micro definition is changing between providers. This will be adding confusion to instance classification, instance classification should be consistent across provides.
 
+Standard instances are created with 4X CPU, and high memory created with 8X CPU and high CPU created with 1X CPU.
+
+
+### Comparison With Pinecone
+
+Pinecone offers serverless and POD based, our deployment model compares to POD based deployment. Pinecone 1x-storage optimized, deployed on GCP is available for apprx $67 per month. 
+
+
