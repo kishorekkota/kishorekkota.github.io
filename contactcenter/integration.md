@@ -1,12 +1,11 @@
-Understood. I will prepare a white paper covering Voice Call Integration from Carrier to On-Premise Systems in the context of Contact Centers. The paper will include:
+---
+layout: home
+title: Voice Integration
+author: Kishore Kota
+nav_order: 2
+parent: Contact Center
+---
 
-- A deep technical analysis of available integration options, including protocols, architectures, and transmission infrastructure.
-- A comparison of different choices for real-time audio forking with metadata to support caller identification.
-- Exploration of various audio transmission infrastructures and data formats.
-- Examples of both open-source and commercial tools for each integration approach.
-- Practical use cases related to Real-Time Agent Assist in contact centers.
-
-I will let you know once the white paper is ready for your review.
 
 # Voice Call Integration from Carrier to On-Premise Systems in Contact Centers
 
