@@ -6,7 +6,7 @@ parent: LLM
 ---
 
 
-### Context 
+## Context 
 
 Traditionally, contact center agent requires understanding past interaction to service the agent, this requires quick processing of the data and building muscle on deciphering short codes and quick notes, and tons of activity recording in relation to the Customer Account.
 
@@ -15,7 +15,7 @@ Reducing Agent Call Handling is the front and center of every call center - this
 In this Blog Post, I will talk thru how we are approaching solving the AHT leveraging AI.
 
 
-### Data and Context
+## Data and Context
 
 Most enterprise have very strict compliance requirements, thanks to regulations. These often require establishing various different activity records outside of actual SOR, and customer interaction often recorded in contact history and agent interaction require notes as a wrap up process.
 
@@ -25,7 +25,7 @@ Data available for insights is plentiful in most enterprises, let dive into diff
 
 
 
-### Options
+## Options
 
 There are several options for building a prediction engine, which can be realtime and batch. In this blog, we will focus on Real Time Prediction using Generative AI & LLM.
 
@@ -37,7 +37,7 @@ There are different choices from implementation standpoint that can impact overa
 
 **Use Case:** Use LLM to predict call intent and provide summary of the past interactions. 
 
-#### Option 1
+### Option 1
 
 Draw Call Prediction with Prompt Based Classification of Data.
 
@@ -88,7 +88,7 @@ Write a plain-English call summary for the account representative.
 
 
 
-#### Option 2
+### Option 2
 
 Draw Call Prediction with Embedding Based Classification of Data using RAG. Many steps are similar to Option 1, but with some differences in the implementation.
 
