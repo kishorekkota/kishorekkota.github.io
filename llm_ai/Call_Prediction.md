@@ -58,7 +58,6 @@ Steps to implement the prediction engine include:
     - Provide a glossary for Prompt to understand the abbreviations and acronyms used in the data.
     - Provide Prompt with data prepared. 
     - Define Task for Prompt to perform.
-
 ```JSON
 ### Glossary
 {glossary_block}
@@ -77,7 +76,6 @@ Write a plain-English call summary for the account representative.
 - Respond with "Call Summary:" and then the summary for most important topics on recent information with respective dates with call intent.
 
 ```
-
 4. Draw insights with LLM:
     - Use the LLM to analyze the data and generate a summary of the call intent.
     - The LLM will use the glossary and memo text to understand the context and provide a concise summary.
@@ -105,7 +103,6 @@ In this option most notable difference is that we will be using Embedding based 
     - Provide LLM with retrieval tool for fetching from vector database.
     - Prompt does not contain glossary, as the glossary is already embedded in the vector database.
     - Prompt will retain other details from Option 1.
-
 ```JSON
 ### Glossary
 {glossary_block}
@@ -123,7 +120,6 @@ Write a plain-English call summary for the account representative.
 - Only respond with the summary and return in 3-5 bullet points.
 - Respond with "Call Summary:" and then the summary for most important topics on recent information with respective dates with call intent.        
 ```
-
 5. Post-processing: Same as Option 1.
 
 
