@@ -96,11 +96,34 @@ In this option most notable difference is that we will be using Embedding based 
 1. Data Collection: Same as Option 1.
 2. Data Preparation: Same as Option 1.
 3. Fine Tune with Knowledge Base
-    Build Embedding:
-    - Build a text embedding model to build a vector database for knowledge base. 
-    
+    - **Build Embedding:** Build a text embedding model to build a vector database for knowledge base. 
+    - **Import to Vector DB:** Store the generated embeddings in the vendor database for further analysis and retrieval.
+    - **Define Retrieval Tool:** Implement a retrieval tool to query the vector database and fetch relevant embeddings based on user input.
 
-4. 
+4. Draw insights with LLM:(Very similar to Option 1)
+    - Provide LLM with retrieval tool for fetching from vector database.
+    - Prompt does not contain glossary, as the glossary is already embedded in the vector database.
+    - Prompt will retain other details from Option 1.
+
+```
+### Glossary
+{glossary_block}
+
+### Memo
+{memo_text}
+
+### Task
+Write a plain-English call summary for the account representative.
+- Use the glossary meanings where applicable.
+- Keep the summary concise and under 120 words.
+- Format the summary as bullet points for clarity.
+- Include information that is missing abbreviations.
+- Predict customer call intent based on the memo.
+- Only respond with the summary and return in 3-5 bullet points.
+- Respond with "Call Summary:" and then the summary for most important topics on recent information with respective dates with call intent.        
+```
+
+5. Post-processing: Same as Option 1.
 
 
 
