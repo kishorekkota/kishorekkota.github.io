@@ -95,8 +95,11 @@ In this option most notable difference is that we will be using Embedding based 
 
 1. Data Collection: Same as Option 1.
 2. Data Preparation: Same as Option 1.
-3. Build Embedding:
-    - Build a text embedding model to build a vector database.
+3. Fine Tune with Knowledge Base
+    Build Embedding:
+    - Build a text embedding model to build a vector database for knowledge base. 
+    
+
 4. 
 
 
