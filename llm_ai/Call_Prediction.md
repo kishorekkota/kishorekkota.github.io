@@ -123,6 +123,9 @@ Write a plain-English call summary for the account representative.
 5. Post-processing: Same as Option 1.
 
 
+### Working Sample
+
+[Call Intent Predication](https://github.com/kishorekkota/agentic_app/tree/main/llm_summary_with_finetuning)
 
 
 
