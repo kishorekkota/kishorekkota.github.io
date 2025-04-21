@@ -60,6 +60,7 @@ Steps to implement the prediction engine include:
     - Define Task for Prompt to perform.
 
 ```JSON
+
 ### Glossary
 {glossary_block}
 
@@ -106,6 +107,7 @@ In this option most notable difference is that we will be using Embedding based 
     - Prompt will retain other details from Option 1.
 
 ```JSON
+
 ### Glossary
 {glossary_block}
 
