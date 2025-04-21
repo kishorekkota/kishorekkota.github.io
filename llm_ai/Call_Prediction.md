@@ -154,4 +154,4 @@ If you said yes to any of these, then you might want to consider Option 2. As it
 
 ### Working Sample
 
-[Call Intent Predication](https://github.com/kishorekkota/agentic_app/tree/main/llm_summary_with_finetuning)
+[Call Intent Predication](https://github.com/kishorekkota/gen_ai/tree/main/llm_summary_with_finetuning)
