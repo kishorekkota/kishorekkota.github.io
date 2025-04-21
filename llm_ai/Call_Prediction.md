@@ -134,13 +134,13 @@ Some key concepts with Prompting are:
 
 - **Task Definition:** Clearly define the task you want the LLM to perform. This helps the model understand what is expected and improves the quality of the output. In our case, we defined the task as writing a plain-English call summary for the account representative, including specific instructions on formatting and content.
 
-- **Contextual Information:** Provide relevant context to the LLM, such as the glossary and memo text. This helps the model understand the specific domain and improves its ability to generate accurate predictions. In our case, we provided Glossary and Memo text.
+- **Contextual Information:** Provide relevant context to the LLM. This helps the model understand the specific domain and improves its ability to generate accurate predictions. In our case, we provided the glossary and memo text to give the model context about the abbreviations and acronyms used in the data.
 
 - **Formatting:** Define rules to follow for the responses. This includes using bullet points, headings, and other formatting techniques to improve readability. This can go into providing structured response as well, for the above sample, we asked the prompt to provide responses in bullet points and with "Call Summary:".
 
 - **Feedback Loop:** Implement a feedback mechanism to continuously improve the prompt and the model's performance based on user interactions and outcomes. Although we did not cover this in the above options, this is a critical step in the process. This can be done by collecting user feedback on the generated summaries and using that feedback to refine the prompt and improve the model's performance over time. This feedback loop can help in adjusting the prompt to better meet user needs and enhance the overall effectiveness of the predictions. There are some tools off the shelf, such as LangSmith, that can help with this process. However, this can be an easier integration leveraging in-house tools for analytics  whichever is available and practiced in the enterprise.
 
-- **Reevaluation:** Identify quality of response by evaluating against predefined metrics. This can include accuracy, relevance, and reduce hallucination based on enterprise standards. By regularly evaluating the performance of the LLM and the prompt, you can identify areas for improvement and make necessary adjustments to enhance the overall effectiveness of the predictions. These datapoints need to be made available to the data science team for further analysis and improvement of the model.
+- **Reevaluation:** Identify quality of response by evaluating against predefined metrics. This can include accuracy, relevance, and reduce hallucination based on enterprise standards. By regularly evaluating the performance of the LLM and the prompt, you can identify areas for improvement and make necessary adjustments to enhance the overall effectiveness of the predictions. These datapoints need to be made available to the data science team for further analysis and improvement of the model. (I will cover this in a future enhancement post.)
 
 ### Conclusion
 
