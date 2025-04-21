@@ -95,7 +95,7 @@ In this option most notable difference is that we will be using Embedding based 
 
 1. Data Collection: Same as Option 1.
 2. Data Preparation: Same as Option 1.
-3. Fine Tune with Knowledge Base
+3. Fine Tune with Knowledge Base (Working example is for Option 1, Option 2 is WIP)
     - **Build Embedding:** Build a text embedding model to build a vector database for knowledge base. 
     - **Import to Vector DB:** Store the generated embeddings in the vendor database for further analysis and retrieval.
     - **Define Retrieval Tool:** Implement a retrieval tool to query the vector database and fetch relevant embeddings based on user input.
