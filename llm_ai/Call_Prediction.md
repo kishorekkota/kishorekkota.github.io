@@ -58,9 +58,7 @@ Steps to implement the prediction engine include:
     - Provide a glossary for Prompt to understand the abbreviations and acronyms used in the data.
     - Provide Prompt with data prepared. 
     - Define Task for Prompt to perform.
-
 ```JSON
-
 ### Glossary
 {glossary_block}
 
@@ -105,9 +103,7 @@ In this option most notable difference is that we will be using Embedding based 
     - Provide LLM with retrieval tool for fetching from vector database.
     - Prompt does not contain glossary, as the glossary is already embedded in the vector database.
     - Prompt will retain other details from Option 1.
-
 ```JSON
-
 ### Glossary
 {glossary_block}
 
@@ -127,9 +123,33 @@ Write a plain-English call summary for the account representative.
 5. Post-processing: Same as Option 1.
 
 
+### Summary
+Both options have their own advantages and disadvantages. Option 1 is simpler and easier to implement, but it may not provide the same level of accuracy as Option 2. Option 2 is more complex and requires more data and processing power, but it can provide better results in some cases.
+
+Most importantly both of these rely on Prompt Engineering, which is a critical step in the process. The quality of the prompt can significantly impact the performance of the LLM and the accuracy of the predictions.
+
+Some key concepts with Prompting are:
+
+- **Task Definition:** Clearly define the task you want the LLM to perform. This helps the model understand what is expected and improves the quality of the output. In our case, we defined the task as writing a plain-English call summary for the account representative, including specific instructions on formatting and content.
+
+- **Contextual Information:** Provide relevant context to the LLM, such as the glossary and memo text. This helps the model understand the specific domain and improves its ability to generate accurate predictions. In our case, we provided Glossary and Memo text.
+
+- **Formatting:** Define rules to follow for the responses. This includes using bullet points, headings, and other formatting techniques to improve readability. This can go into providing structured response as well, for the above sample, we asked the prompt to provide responses in bullet points and with "Call Summary:".
+
+- **Feedback Loop:** Implement a feedback mechanism to continuously improve the prompt and the model's performance based on user interactions and outcomes. Although we did not cover this in the above options, this is a critical step in the process. This can be done by collecting user feedback on the generated summaries and using that feedback to refine the prompt and improve the model's performance over time. This feedback loop can help in adjusting the prompt to better meet user needs and enhance the overall effectiveness of the predictions. There are some tools off the shelf, such as LangSmith, that can help with this process. However, this can be an easier integration leveraging in-house tools for analytics  whichever is available and practiced in the enterprise.
+
+- **Reevaluation:** Identify quality of response by evaluating against predefined metrics. This can include accuracy, relevance, and reduce hallucination based on enterprise standards. By regularly evaluating the performance of the LLM and the prompt, you can identify areas for improvement and make necessary adjustments to enhance the overall effectiveness of the predictions. These datapoints need to be made available to the data science team for further analysis and improvement of the model.
+
+### Conclusion
+
+Here are the key decision points for deciding on Option 1 vs Option 2:
+
+- Does your Knowledge Base have tons of data that can be better off with RAG?
+- Does your Prompt expect to have a large token size?
+
+If you said yes to any of these, then you might want to consider Option 2. As it reduces token limit going into the Prompt and also allows you to build a knowledge base that can be used for other use cases as well. The knowledge base pipeline can be kept up to date and leveraged for continuous improvement in predictions. Most cases, Option 1 is good enough to get started with, and you can always move to Option 2 later on as your data grows and your needs evolve.
+
+
 ### Working Sample
 
 [Call Intent Predication](https://github.com/kishorekkota/agentic_app/tree/main/llm_summary_with_finetuning)
-
-
-
