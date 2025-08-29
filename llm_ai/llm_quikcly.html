@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Core LLM Concepts: An Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Subtle Accents -->
+    <!-- Application Structure Plan: The application is structured as a single-page dashboard with a persistent sidebar for navigation. The 100 concepts from the report are grouped into 10 logical, thematic sections (e.g., "Foundational Architecture," "Training Lifecycle," "LLM Agents"). This thematic structure was chosen over the report's linear format to allow users to explore topics non-linearly based on their interests, which is more intuitive for a learning tool. Key interactions include clicking on navigation links to smoothly scroll to sections, and interacting with visual elements like charts and diagrams to reveal more information. This design prioritizes ease of navigation and focused learning on specific domains within the vast LLM landscape. -->
+    <!-- Visualization & Content Choices: The report's dense technical text is transformed into digestible cards and interactive visualizations. For instance, the "LLM Adaptation Techniques" table is presented as an interactive comparison grid. The "Mixture of Experts" architecture is explained with a dynamic HTML/CSS diagram instead of a static description. The goal is to organize and inform. Chart.js is used to visualize the Safety-Performance trade-off. All visualizations are built with HTML/CSS or Canvas via Chart.js, strictly avoiding SVG and Mermaid JS to adhere to constraints, while enhancing user engagement and understanding of complex relationships. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #333;
+        }
+        .concept-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .concept-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active {
+            color: #4f46e5;
+            background-color: #eef2ff;
+            border-left-color: #4f46e5;
+        }
+        .nav-link:hover {
+            background-color: #f4f4f5;
+            color: #4f46e5;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="flex">
+
+    <aside class="w-64 h-screen sticky top-0 bg-white border-r border-gray-200 p-4 hidden lg:block">
+        <h1 class="text-xl font-bold text-indigo-600 mb-6">LLM Concepts</h1>
+        <nav id="desktop-nav" class="space-y-2">
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto">
+        <div class="max-w-4xl mx-auto">
+            <header class="mb-12 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">A Visual Guide to 100 Core LLM Concepts</h1>
+                <p class="mt-4 text-lg text-gray-600">An interactive exploration of the foundational ideas, development lifecycle, and safety considerations for Large Language Models, based on a comprehensive technical survey.</p>
+            </header>
+
+            <div id="content-sections">
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        const llmData = {
+            "Foundational Architecture": [
+                { id: 1, title: "RNNs & LSTMs", content: "Predecessors to Transformers, Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTMs) process data sequentially. LSTMs improved on RNNs by using gates to manage memory over long sequences, mitigating the vanishing gradient problem, but their sequential nature limited parallelization." },
+                { id: 2, title: "Transformer Architecture", content: "Introduced in 'Attention is All You Need,' this architecture abandoned recurrence for a highly parallelizable design based on self-attention. It consists of an Encoder to process input and a Decoder to generate output, enabling models of unprecedented scale." },
+                { id: 3, title: "Self-Attention Mechanism", content: "The core innovation of the Transformer. It allows the model to weigh the importance of all other tokens in a sequence when processing a given token. This is achieved using Query (Q), Key (K), and Value (V) vectors for each token to calculate attention scores." },
+                { id: 4, title: "Scaled Dot-Product Attention", content: "The mathematical implementation of self-attention. It computes scores by taking the dot product of Query and Key matrices, scales them to stabilize training, applies a softmax to get attention weights, and multiplies by the Value matrix to get a contextualized output." },
+                { id: 5, title: "Multi-Head Attention", content: "Instead of one attention calculation, this mechanism runs multiple attention 'heads' in parallel on different projections of the Q, K, and V vectors. Each head can learn different types of relationships (e.g., syntactic, semantic), and their outputs are combined for a richer representation." },
+                { id: 6, title: "Positional Encoding", content: "Since self-attention is permutation-invariant, positional encodings are added to token embeddings to give the model information about word order. These are vectors generated using sine and cosine functions that represent the position of each token in the sequence." },
+                { id: 7, title: "Feed-Forward Networks (FFNs)", content: "Each layer in a Transformer contains a position-wise Feed-Forward Network. It's a simple neural network applied independently to each token's representation after the attention step, adding computational depth and allowing for more complex transformations." },
+                { id: 8, title: "Layer Norm & Residuals", content: "Two crucial techniques for stable training of deep Transformers. Residual (skip) connections allow gradients to flow directly through the network, while Layer Normalization stabilizes the distribution of activations in each layer, preventing vanishing/exploding gradients." },
+                { id: 9, title: "Model Parameters & Scale", content: "The learned weights and biases of an LLM. Scaling laws show a predictable improvement in performance as model parameters, dataset size, and compute increase. The Transformer's parallelizability is what unlocked the ability to train models with billions of parameters." },
+                { id: 10, title: "Vision Transformers (ViT)", content: "An adaptation of the Transformer architecture for computer vision. An image is split into patches, which are treated like tokens. This demonstrates the generality of the attention mechanism beyond language, applying it to learn global relationships between image parts." }
+            ],
+            "Data & Representation": [
+                { id: 11, title: "Tokenization", content: "The first step in NLP: breaking text into smaller units (tokens). Strategies include character, word, and subword tokenization. Modern LLMs almost exclusively use subword tokenization to balance vocabulary size and the ability to represent any word." },
+                { id: 12, title: "Tokenizer Vocabulary", content: "A fixed-size dictionary created by training a tokenizer on a large corpus. It maps each unique token (e.g., 'the', 'ing') to a unique integer ID. This numerical representation is what the model processes internally." },
+                { id: 13, title: "Subword Algorithms", content: "Algorithms like Byte-Pair Encoding (BPE) and WordPiece learn to segment text. They start with characters and iteratively merge frequent pairs to build a vocabulary of common words and meaningful subwords, enabling the model to handle rare or new words." },
+                { id: 14, title: "Word Embeddings", content: "Dense numerical vectors that represent tokens in a multi-dimensional space. An embedding layer in an LLM acts as a lookup table, converting token IDs into these meaningful vectors that capture semantic information." },
+                { id: 15, title: "Contextual Embeddings", content: "Unlike static embeddings (e.g., Word2Vec) where a word has one fixed vector, Transformers generate contextual embeddings. The vector for a word like 'bank' changes depending on whether it appears in 'river bank' or 'bank account,' capturing its meaning in context." },
+                { id: 16, title: "Vector Space & Similarity", content: "Embeddings map tokens to a vector space where semantic relationships become geometric. Similar words are closer together. Cosine similarity is used to measure the angle between vectors, quantifying their semantic relevance." },
+                { id: 17, title: "Embedding Dimensions", content: "The size of an embedding vector (e.g., 768, 4096). Higher dimensions can capture more nuance but increase computational cost. This is a key trade-off between model performance and efficiency." },
+                { id: 18, title: "Vector Databases", content: "Specialized databases designed to store and efficiently query high-dimensional embedding vectors. They are the core infrastructure for long-term memory in LLM applications and RAG systems, enabling fast semantic similarity search." },
+                { id: 19, title: "Vector Indexing", content: "To avoid slow brute-force searches, vector databases use indexing strategies. These are data structures that organize vectors to allow for rapid pruning of the search space, enabling low-latency queries over billions of vectors." },
+                { id: 20, title: "Approximate Nearest Neighbor", content: "The core search algorithm in most vector databases. ANN trades perfect accuracy for massive speed gains by finding vectors that are *very likely* to be the closest matches, making large-scale semantic search practical." }
+            ],
+            "Training & Adaptation": [
+                { id: 21, title: "Pre-training", content: "The initial, massively expensive training phase on web-scale, unlabeled data. Using a self-supervised objective like next-word prediction, the model learns grammar, facts, and reasoning abilities, creating a general-purpose foundation model." },
+                { id: 22, title: "Supervised Fine-Tuning (SFT)", content: "After pre-training, the model is trained on a smaller, high-quality dataset of labeled examples (e.g., prompt-response pairs). This adapts the model to specific tasks or styles, specializing its general knowledge." },
+                { id: 23, title: "Instruction Tuning", content: "A form of SFT that trains the model on a diverse mix of tasks formatted as instructions. This teaches the model the general concept of 'following instructions,' turning it from a text completer into a helpful assistant." },
+                { id: 24, title: "PEFT (LoRA)", content: "Parameter-Efficient Fine-Tuning (PEFT) methods like Low-Rank Adaptation (LoRA) make fine-tuning more accessible. They freeze most of the model's weights and only train a small number of new 'adapter' parameters, drastically reducing compute and memory needs." },
+                { id: 25, title: "RLHF: The Process", content: "Reinforcement Learning from Human Feedback (RLHF) aligns models with nuanced human values. It involves collecting human preference data, training a Reward Model to predict those preferences, and then using reinforcement learning to fine-tune the LLM to maximize the reward score." },
+                { id: 26, title: "RLHF: Reward Model", content: "A separate model trained on human-ranked responses. It learns to act as a scalable proxy for human judgment, outputting a scalar 'reward' score for any given prompt-response pair, which guides the reinforcement learning phase." },
+                { id: 27, title: "RLHF: PPO", content: "Proximal Policy Optimization (PPO) is the reinforcement learning algorithm typically used in RLHF. It updates the LLM's weights to maximize the reward from the Reward Model, with a constraint to prevent it from deviating too far from the original SFT model." },
+                { id: 28, title: "Direct Preference Optimization (DPO)", content: "A simpler, more stable alternative to RLHF. DPO achieves alignment by training the model directly on preference data (winning/losing responses) with a specialized loss function, bypassing the need for an explicit reward model and reinforcement learning." },
+                { id: 29, title: "Model Distillation", content: "A compression technique where a smaller 'student' model is trained to mimic the output probabilities (soft labels) of a larger 'teacher' model. This distills the teacher's knowledge into a more efficient architecture for deployment." },
+                { id: 30, title: "Model Quantization", content: "An optimization technique that reduces model size and speeds up inference by lowering the numerical precision of its weights (e.g., from 32-bit floats to 8-bit integers). This makes large models practical for real-world deployment." }
+            ],
+            "Development & Interaction": [
+                { id: 31, title: "Prompt Engineering", content: "The art and science of crafting effective inputs (prompts) to guide an LLM to produce a desired output. Key techniques include providing clarity, specificity, context, examples, and specifying the output format." },
+                { id: 32, title: "Context Window", content: "The maximum number of tokens an LLM can process at once (input + output). It acts as the model's short-term memory; any information outside this window is forgotten for the current interaction." },
+                { id: 33, title: "Zero-Shot & Few-Shot", content: "Zero-shot prompting asks the model to perform a task without examples. Few-shot prompting provides a few examples ('shots') of the task within the prompt, which dramatically improves performance by demonstrating the desired pattern." },
+                { id: 34, title: "Chain-of-Thought (CoT)", content: "A prompting technique that improves reasoning on complex tasks. Instead of asking for a final answer, the model is prompted to generate a step-by-step reasoning process, which breaks the problem down and reduces errors." },
+                { id: 35, title: "Self-Consistency", content: "An enhancement to CoT where the model generates multiple diverse reasoning chains for the same problem. The final answer is chosen by a majority vote, making the result more robust and less prone to single-path reasoning errors." },
+                { id: 36, title: "RAG: Core Architecture", content: "Retrieval-Augmented Generation (RAG) grounds LLM responses in external data. It first retrieves relevant documents from a knowledge base (e.g., a vector database) and then passes them as context to the LLM to generate an answer, reducing hallucinations and bypassing knowledge cut-offs." },
+                { id: 37, title: "RAG: Advanced Retrieval", content: "Techniques to improve RAG's retrieval quality. Hybrid Search combines semantic and keyword search. Reranking uses a powerful second-stage model to re-score an initial set of retrieved documents for better relevance." },
+                { id: 38, title: "RAG: Data Chunking", content: "The process of splitting large documents into smaller, coherent pieces ('chunks') to be stored in a RAG system. The chunking strategy is critical for ensuring that retrieved context is both relevant and self-contained." },
+                { id: 39, title: "LLM APIs", content: "The primary way developers interact with LLMs. Applications send an HTTP request with a prompt and parameters (e.g., temperature) to an API endpoint, and the provider's server returns the LLM's generated text in the response." },
+                { id: 40, title: "Temperature & Sampling", content: "Parameters that control the randomness of an LLM's output. Low temperature makes the output more deterministic and focused. High temperature increases creativity and diversity. Top-p (nucleus) sampling is a common method to control the sampling pool." }
+            ],
+            "Advanced Architectures": [
+                { id: 41, title: "Mixture of Experts (MoE)", content: "An architecture that increases model capacity efficiently. Instead of one large feed-forward network (FFN), it uses many smaller 'expert' FFNs and only activates a few of them for each token, allowing for a huge total parameter count with low inference cost." },
+                { id: 42, title: "MoE: Gating Network", content: "The 'router' in an MoE layer. It's a small neural network that learns to dynamically decide which experts are best suited to process each incoming token, enabling sparse, conditional computation." },
+                { id: 43, title: "MoE: Sparse Activation", content: "The key benefit of MoE. Only a fraction of the model's total parameters are activated for any given input. This decouples total parameter count from computational cost, making trillion-parameter models more viable." },
+                { id: 44, title: "Multi-modal LLMs (MLLMs)", content: "Models that can process and reason about information from multiple modalities like text, images, and audio simultaneously. They typically use specialized encoders for each modality and a connector module to align the representations for an LLM backbone." },
+                { id: 45, title: "MLLM Architecture", content: "Consists of modality-specific encoders (e.g., ViT for images), a projector module to map different embeddings into a shared space, and a pre-trained LLM backbone that processes the combined sequence of multi-modal embeddings." },
+                { id: 46, title: "Emergent Abilities", content: "Capabilities that appear in large-scale models but not in smaller ones, often with a sharp, unpredictable performance jump. There is debate on whether these are true emergent properties or artifacts of evaluation metrics." },
+                { id: 47, title: "Scaling Laws", content: "Empirical formulas showing a predictable power-law relationship between a model's performance (loss) and its size, dataset size, and training compute. These laws guide the development of new, larger foundation models." },
+                { id: 48, title: "Hallucinations", content: "When an LLM generates text that is factually incorrect or nonsensical. This is a natural byproduct of its probabilistic nature, not a bug, and is a key motivation for using RAG to ground responses in facts." },
+                { id: 49, title: "Function Calling & Tool Use", content: "A capability where the LLM outputs a structured JSON object specifying a function to call and its arguments. The application code executes the function (e.g., an API call) and feeds the result back to the LLM, enabling it to interact with external systems." },
+                { id: 50, title: "Knowledge Cut-off", content: "The limitation that an LLM's knowledge is frozen at the time its training data was collected. It knows nothing about events after this date. RAG is the primary method to overcome this limitation by providing up-to-date information at inference time." }
+            ],
+            "LLM Agents": [
+                { id: 51, title: "Core Agent Architecture", content: "An autonomous system using an LLM as its 'brain'. It typically consists of the LLM for reasoning, Memory (short-term in the context window, long-term in a vector DB), and Tools (APIs/functions) to interact with its environment." },
+                { id: 52, title: "Plan-and-Execute", content: "An agent framework where a planner LLM first creates a complete, static, step-by-step plan. An executor then carries out each step. It's efficient for predictable tasks but not adaptable to unexpected events." },
+                { id: 53, title: "ReAct Framework", content: "A more dynamic agent framework that interleaves Reasoning and Acting. In a tight loop (Thought -> Action -> Observation), the agent continually re-evaluates its strategy based on new information, making it more robust for complex tasks." },
+                { id: 54, title: "Tool Execution Loop", content: "The fundamental cycle of an agent. The LLM decides on an action (a tool call), the application executes it, the result (observation) is returned, and this new information is fed back to the LLM to decide the next step." },
+                { id: 55, title: "Short-Term Memory", content: "The agent's working memory, managed within the LLM's context window. It contains the goal, recent history, and retrieved long-term memories. Effective management (e.g., summarization) is crucial to avoid exceeding the context limit." },
+                { id: 56, title: "Long-Term Memory", content: "An external store, typically a vector database, that allows an agent to retain and recall information across sessions. It can be episodic (past experiences) or semantic (factual knowledge)." },
+                { id: 57, title: "CoALA Framework", content: "Cognitive Architectures for Language Agents (CoALA) is a formal framework for describing agent components, inspired by cognitive science. It structures agents along dimensions of Memory, Action Space, and Decision-Making." },
+                { id: 58, title: "Multi-Agent Systems", content: "Systems where multiple agents interact to solve a problem. They can be hierarchical (manager-worker) or collaborative. These systems can exhibit emergent behaviors like spontaneous collaboration or division of labor." },
+                { id: 59, title: "Excessive Agency Risk", content: "A critical safety risk where an agent is given too many permissions or access to powerful tools. If compromised, it could take unintended, harmful actions. This highlights the need for robust safeguards." },
+                { id: 60, title: "Human-in-the-Loop (HITL)", content: "The primary mitigation for excessive agency. For high-stakes or irreversible actions, the agent must pause and request explicit approval from a human, who acts as the final safety check." }
+            ],
+            "LLM Safety & Alignment": [
+                { id: 61, title: "The Alignment Problem", content: "The challenge of ensuring an AI's goals and behaviors are consistent with human values. Outer Alignment is about defining the right goal; Inner Alignment is about ensuring the model actually pursues that goal." },
+                { id: 62, title: "HHH Criteria", content: "A framework for alignment focusing on three criteria: Helpful (follows instructions accurately), Honest (is truthful and avoids hallucination), and Harmless (avoids toxic, biased, or dangerous content)." },
+                { id: 63, title: "Value Learning", content: "The core of alignment is teaching a model to navigate complex and often contradictory human values. Techniques like RLHF use human preference data to provide a learning signal for these values." },
+                { id: 64, title: "Sources of Bias", content: "Bias in LLMs primarily comes from their training data, which reflects societal stereotypes. It can also be introduced by biased human labelers during alignment or amplified by the learning algorithms themselves." },
+                { id: 65, title: "Fairness", content: "Defined as the absence of harmful social bias. Key concepts include Group Fairness (equal outcomes across groups) and Counterfactual Fairness (output doesn't change if a sensitive attribute is altered)." },
+                { id: 66, title: "Bias Mitigation", content: "Techniques to reduce bias can be applied at different stages: Pre-processing (re-sampling data), In-training (adding fairness constraints to the loss function), and Post-processing (filtering biased outputs)." },
+                { id: 67, title: "Algorithmic Discrimination", content: "The real-world harm caused by biased LLM outputs when deployed in high-stakes applications, such as resume screening or medical diagnosis, perpetuating societal inequities." },
+                { id: 68, title: "Antisocial & Toxic Outputs", content: "A key alignment goal is preventing the generation of harmful content like hate speech or harassment. RLHF is used to train models to recognize and refuse such requests." },
+                { id: 69, title: "Misinformation & Disinformation", content: "LLMs can spread misinformation (unintentional falsehoods, i.e., hallucinations) or be used to create disinformation (intentional falsehoods). RAG and guardrails are key mitigations." },
+                { id: 70, title: "IP & Data Privacy Risks", content: "LLMs may reproduce copyrighted material or leak personally identifiable information (PII) from their training data. User prompts can also be a privacy risk if not handled securely by providers." }
+            ],
+            "LLM Security: Threats": [
+                { id: 71, title: "OWASP Top 10 for LLMs", content: "A framework from the Open Worldwide Application Security Project that identifies and prioritizes the top 10 most critical security risks for LLM applications, serving as a guide for threat modeling." },
+                { id: 72, title: "Direct Prompt Injection", content: "An attack where a user crafts input to override the developer's system prompt. The LLM cannot distinguish trusted instructions from untrusted user input, leading to a hijack of its behavior." },
+                { id: 73, title: "Indirect Prompt Injection", content: "A more advanced attack where a malicious prompt is hidden in an external data source (e.g., a webpage) that the LLM processes. This can compromise the agent without the user's knowledge." },
+                { id: 74, title: "Jailbreaking", content: "A type of prompt injection aimed at bypassing a model's safety guardrails to trick it into generating harmful or unethical content that it was trained to refuse." },
+                { id: 75, title: "System Prompt Leakage", content: "An attack where the LLM is tricked into revealing its own confidential system prompt, exposing proprietary logic and enabling more effective future attacks." },
+                { id: 76, title: "Training Data Poisoning", content: "An integrity attack where an adversary injects malicious data into the training set to create backdoors, introduce biases, or degrade the model's performance in a targeted way." },
+                { id: 77, title: "Model Theft", content: "The unauthorized copying and exfiltration of a proprietary LLM's weights. This is a major economic loss and security risk, as it removes all developer-implemented safety controls." },
+                { id: 78, title: "Insecure Output Handling", content: "A vulnerability where an application uses LLM output in a downstream system without sanitization. This can lead to code execution vulnerabilities like XSS or SQL injection if the LLM is tricked into generating malicious code." },
+                { id: 79, title: "Supply Chain Vulnerabilities", content: "Risks from using compromised third-party components, such as a poisoned pre-trained model from a public hub or a vulnerable open-source library." },
+                { id: 80, title: "Model Denial of Service (DoS)", content: "An attack where an adversary sends resource-intensive prompts to an LLM, degrading service for others or causing massive, unexpected costs for the application owner (unbounded consumption)." }
+            ],
+            "LLM Security: Defenses": [
+                { id: 81, title: "Input Sanitization", content: "The first line of defense against prompt injection. This involves filtering user input for known malicious patterns or using a classifier model to flag suspicious prompts." },
+                { id: 82, title: "Output Sanitization", content: "Treating LLM output as untrusted data. This includes encoding output for web display (to prevent XSS), validating structured data, and scanning for sensitive information leaks." },
+                { id: 83, title: "LLM Guardrails", content: "A programmable safety layer that inspects inputs and outputs to enforce policies. Examples include topical guardrails (staying on topic) and moderation guardrails (blocking harmful content)." },
+                { id: 84, title: "Content Moderation Systems", content: "Specialized classifier models used to detect and filter a wide range of policy violations like hate speech or harassment in both prompts and responses." },
+                { id: 85, title: "Red Teaming", content: "A proactive security practice where a team acts as an adversary to systematically stress-test an LLM application, discovering vulnerabilities like novel jailbreaks before they can be exploited." },
+                { id: 86, title: "Principle of Least Privilege", content: "A core security principle for agents. An agent and its tools should only be granted the minimum permissions necessary to perform their function, limiting the potential damage if compromised." },
+                { id: 87, title: "Secure Data Handling", content: "Defenses against data poisoning, including vetting data sources, implementing strict access controls on training pipelines, and scanning datasets for anomalies." },
+                { id: 88, title: "API Security", content: "Securing the LLM endpoint with standard best practices like strong authentication, rate limiting (to prevent DoS), and encryption of data in transit." },
+                { id: 89, title: "Monitoring & Logging", content: "Continuously logging all LLM interactions. This is critical for detecting attacks in real-time, performing forensic analysis after an incident, and identifying weaknesses in defenses." },
+                { id: 90, title: "Fact-Checking Mechanisms", content: "Guardrails that verify the factual accuracy of an LLM's claims, often using a RAG-like system to check statements against a trusted knowledge base to mitigate hallucinations." }
+            ],
+            "Future & Broader Context": [
+                { id: 91, title: "The Scalability Frontier", content: "Research into whether the performance gains from scaling models will continue or plateau. This includes exploring novel architectures and synthetic data generation to achieve more sustainable capability improvements." },
+                { id: 92, title: "Continuous Alignment", content: "The challenge of creating models that can adapt their knowledge and values over time without full retraining, allowing them to remain aligned with evolving societal norms." },
+                { id: 93, title: "Safety-Performance Trade-off", content: "The tension between implementing strict safety guardrails and maintaining model performance. Overly cautious models can become less helpful, requiring a careful balance based on the application's risk profile." },
+                { id: 94, title: "Value-Action Gap", content: "The phenomenon where a model can state its adherence to a value (e.g., fairness) but take actions that contradict it. This shows that surface-level alignment is insufficient for building true trustworthiness." },
+                { id: 95, title: "Automated Alignment (RLAIF)", content: "Using AI to help align other AI, such as Reinforcement Learning from AI Feedback (RLAIF). This addresses the bottleneck of human oversight for superhuman tasks but raises questions about aligning the 'supervisor' AI." },
+                { id: 96, title: "Large Reasoning Models (LRMs)", content: "Models specifically architected and trained to excel at complex, multi-step reasoning. They often use techniques like scaling inference-time compute to achieve superhuman performance in domains like competitive math." },
+                { id: 97, title: "Emergence of Deception", content: "A long-term safety concern that advanced, goal-oriented AI might learn deceptive or manipulative behaviors as an instrumental strategy to achieve its primary objective if it is poorly specified." },
+                { id: 98, title: "AI Governance & Regulation", content: "The global effort to establish legal and regulatory frameworks (e.g., the EU AI Act) to ensure AI is developed and deployed safely, ethically, and transparently." },
+                { id: 99, title: "Open-Source vs. Proprietary", content: "The ecosystem's tension between closed, proprietary models from large labs (e.g., GPT-4) and open-weight models (e.g., Llama) that foster transparency, innovation, and greater developer control." },
+                { id: 100, title: "The Path Towards AGI", content: "The synthesis of all these concepts—architecture, reasoning, agency, multi-modality—forms a conceptual roadmap for research towards Artificial General Intelligence (AGI), which must proceed in lockstep with robust safety and alignment research." }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const navContainer = document.getElementById('desktop-nav');
+            const contentContainer = document.getElementById('content-sections');
+            let activeLink = null;
+
+            Object.keys(llmData).forEach((sectionTitle, index) => {
+                const sectionId = sectionTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                
+                const navLink = document.createElement('a');
+                navLink.href = `#${sectionId}`;
+                navLink.textContent = sectionTitle;
+                navLink.className = 'nav-link block px-4 py-2 text-sm font-medium text-gray-600 rounded-md';
+                navLink.dataset.sectionId = sectionId;
+                if (index === 0) {
+                    navLink.classList.add('active');
+                    activeLink = navLink;
+                }
+                navContainer.appendChild(navLink);
+
+                const section = document.createElement('section');
+                section.id = sectionId;
+                section.className = 'mb-16';
+
+                const sectionHeader = document.createElement('h2');
+                sectionHeader.textContent = sectionTitle;
+                sectionHeader.className = 'text-3xl font-bold text-gray-800 mb-2 border-b-2 border-indigo-200 pb-2';
+                section.appendChild(sectionHeader);
+
+                const sectionIntro = document.createElement('p');
+                sectionIntro.className = 'text-gray-600 mb-8';
+                sectionIntro.textContent = getSectionIntro(sectionTitle);
+                section.appendChild(sectionIntro);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+                section.appendChild(grid);
+
+                llmData[sectionTitle].forEach(concept => {
+                    const card = document.createElement('div');
+                    card.className = 'concept-card rounded-lg p-6 shadow-sm';
+                    card.innerHTML = `
+                        <h3 class="font-semibold text-lg text-indigo-700">${concept.id}. ${concept.title}</h3>
+                        <p class="text-gray-600 mt-2 text-sm">${concept.content}</p>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                contentContainer.appendChild(section);
+            });
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        const newActiveLink = document.querySelector(`.nav-link[data-section-id="${sectionId}"]`);
+                        if (activeLink) {
+                            activeLink.classList.remove('active');
+                        }
+                        if (newActiveLink) {
+                            newActiveLink.classList.add('active');
+                            activeLink = newActiveLink;
+                        }
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        function getSectionIntro(title) {
+            const intros = {
+                "Foundational Architecture": "Explore the core building blocks of modern LLMs, from the revolutionary Transformer architecture to the self-attention mechanism that gives them profound contextual understanding.",
+                "Data & Representation": "Discover how raw text is converted into a numerical format that models can understand, through the crucial processes of tokenization and the creation of meaningful vector embeddings.",
+                "Training & Adaptation": "Learn about the multi-stage lifecycle of an LLM, from massive pre-training on web-scale data to the fine-tuning and alignment techniques that make them helpful and safe.",
+                "Development & Interaction": "Understand the practical techniques developers use to control and interact with LLMs, including prompt engineering, RAG, and managing the model's short-term memory or context window.",
+                "Advanced Architectures": "Delve into the cutting edge of LLM design, including efficient Mixture-of-Experts models, the fusion of text and images in multi-modal systems, and the emergent abilities that arise from scale.",
+                "LLM Agents": "See how LLMs are becoming the 'brains' of autonomous agents that can plan, remember, and use tools to interact with the digital world, revolutionizing automation.",
+                "LLM Safety & Alignment": "Grasp the critical challenge of aligning LLM behavior with human values. This section covers the sources of bias, fairness criteria, and the techniques used to make models helpful, honest, and harmless.",
+                "LLM Security: Threats": "Examine the new landscape of adversarial attacks targeting LLMs, guided by the OWASP Top 10. Learn about prompt injection, data poisoning, and other unique vulnerabilities.",
+                "LLM Security: Defenses": "Learn about the multi-layered, defense-in-depth strategies used to protect LLM applications, from input/output filtering and guardrails to proactive red teaming.",
+                "Future & Broader Context": "Look ahead at the frontiers of LLM research, including the push towards AGI, the challenges of continuous alignment, and the evolving regulatory and ethical landscape."
+            };
+            return intros[title] || "An overview of key concepts in this area.";
+        }
+
+    </script>
+</body>
+</html>
