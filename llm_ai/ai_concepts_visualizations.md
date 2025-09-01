@@ -2,6 +2,7 @@
 title: All About LLM
 layout: home
 nav_order: 4
+parent: LLM
 ---
 
 # AI Implementation Guide - Comprehensive Visual Diagrams
