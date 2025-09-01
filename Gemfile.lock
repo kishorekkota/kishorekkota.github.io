@@ -87,6 +87,8 @@ DEPENDENCIES
   jekyll-default-layout
   jekyll-seo-tag
   just-the-docs (= 0.10.0)
+  kramdown-parser-gfm
+  webrick (~> 1.7)
 
 BUNDLED WITH
    2.3.26

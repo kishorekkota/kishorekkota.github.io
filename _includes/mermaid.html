@@ -1,0 +1,58 @@
+<!-- Mermaid.js -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            themeVariables: {
+                primaryColor: '#5f27cd',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#5f27cd',
+                lineColor: '#333',
+                secondaryColor: '#eeeeee',
+                tertiaryColor: '#f9f9f9',
+                background: '#ffffff',
+                mainBkg: '#ffffff',
+                secondBkg: '#f8f9fa',
+                tertiaryBkg: '#dee2e6'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+                bottomMarginAdj: 1,
+                useMaxWidth: true
+            },
+            gantt: {
+                titleTopMargin: 25,
+                barHeight: 20,
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: 11,
+                fontWeight: 'normal',
+                gridLineStartPadding: 35,
+                numberSectionStyles: 4,
+                axisFormat: '%m/%d/%Y'
+            }
+        });
+        
+        // Force re-render of any existing mermaid diagrams
+        if (typeof mermaid !== 'undefined') {
+            mermaid.init();
+        }
+    });
+</script>

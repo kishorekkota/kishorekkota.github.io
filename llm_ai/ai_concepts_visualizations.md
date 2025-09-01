@@ -1,7 +1,7 @@
 ---
-title: All About LLM
-layout: home
-nav_order: 4
+title: AI Concepts Visualizations
+layout: mermaid
+nav_order: 2
 parent: LLM
 ---
 

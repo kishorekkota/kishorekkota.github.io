@@ -3,9 +3,26 @@ description: A starter template for a Jeykll site using the Just the Docs theme!
 theme: just-the-docs
 google_analytics: KISHOREKKOTA AWS CONNECT BIAN MICROSERVICES KAFKA NODEJS
 url: https://kishorekota.github.io
+
+# Mermaid configuration
+mermaid:
+  # Version of mermaid library
+  # Pick an available version from https://cdn.jsdelivr.net/npm/mermaid/
+  version: "10.6.1"
+
 plugins:
   - jekyll-seo-tag
   - jekyll-default-layout
+
+# Enable mermaid diagrams
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Custom CSS
+sass:
+  sass_dir: _sass
+  style: compressed
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template

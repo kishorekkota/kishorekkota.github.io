@@ -1,7 +1,7 @@
 ---
-title: All About LLM
-layout: home
-nav_order: 4
+title: Enterprise AI Implementation Guide
+layout: default
+nav_order: 1
 parent: LLM
 ---
 
