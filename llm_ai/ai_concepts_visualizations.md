@@ -322,8 +322,6 @@ graph TB
     style MCP fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
     style MCPS fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
 
-
-```
     
     ZS --> FS
     FS --> CoT
