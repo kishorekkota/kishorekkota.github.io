@@ -2,7 +2,7 @@
 title: Agentic App
 layout: home
 nav_order: 8
-parent: LLM
+parent: Large Language Models
 ---
 
 

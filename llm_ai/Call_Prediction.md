@@ -2,7 +2,7 @@
 title: Proactive Customer Engagement
 layout: home
 nav_order: 9
-parent: LLM
+parent: Large Language Models
 ---
 
 
