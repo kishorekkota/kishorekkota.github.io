@@ -2,7 +2,7 @@
 title: Enterprise AI Implementation Guide
 layout: default
 nav_order: 1
-parent: LLM
+parent: Large Language Models
 ---
 
 # The Complete Enterprise AI Implementation Guide: 90+ Essential Concepts for Application Development, Security, and Deployment

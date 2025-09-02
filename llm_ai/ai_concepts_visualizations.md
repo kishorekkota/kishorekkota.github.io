@@ -2,7 +2,7 @@
 title: AI Concepts Visualizations
 layout: mermaid
 nav_order: 2
-parent: LLM
+parent: Large Language Models
 ---
 
 # AI Implementation Guide - Comprehensive Visual Diagrams
@@ -13,6 +13,7 @@ This document contains MermaidJS visualizations for all concepts covered in "The
 
 ### 1. The AI Hierarchy
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     AI[Artificial Intelligence<br/>Broadest scope - simulating human intelligence]
     ML[Machine Learning<br/>Learning from data without explicit programming]
@@ -21,13 +22,16 @@ graph TB
     AI --> ML
     ML --> DL
     
-    style AI fill:#e1f5fe
-    style ML fill:#f3e5f5
-    style DL fill:#fff3e0
+    style AI fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+    style ML fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style DL fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+
+
 ```
 
 ### 2. The Spectrum of AI
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph LR
     ANI[Artificial Narrow Intelligence<br/>ANI - Weak AI<br/>Single task focus<br/>All current AI systems]
     AGI[Artificial General Intelligence<br/>AGI - Human-level AI<br/>Multiple task capability<br/>Theoretical future]
@@ -36,13 +40,16 @@ graph LR
     ANI -->|Future Development| AGI
     AGI -->|Future Development| ASI
     
-    style ANI fill:#c8e6c9
-    style AGI fill:#fff9c4
-    style ASI fill:#ffcdd2
+    style ANI fill:#c8e6c9,stroke:#2e7d32,stroke-width:3px
+    style AGI fill:#fff9c4,stroke:#f57f17,stroke-width:3px
+    style ASI fill:#ffcdd2,stroke:#c62828,stroke-width:3px
+
+
 ```
 
 ### 3. AI Development Workflow
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     A[Data Collection<br/>Gather datasets from various sources]
     B[Data Preparation<br/>Clean, label, and structure data]
@@ -59,18 +66,21 @@ graph TB
     F -->|Feedback| B
     E -->|Poor Performance| C
     
-    style A fill:#e3f2fd
-    style B fill:#f1f8e9
-    style C fill:#fff8e1
-    style D fill:#fce4ec
-    style E fill:#f3e5f5
-    style F fill:#e8f5e8
+    style A fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
+    style B fill:#f1f8e9,stroke:#2e7d32,stroke-width:3px
+    style C fill:#fff8e1,stroke:#ef6c00,stroke-width:3px
+    style D fill:#fce4ec,stroke:#c2185b,stroke-width:3px
+    style E fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style F fill:#e8f5e8,stroke:#388e3c,stroke-width:3px
+
+
 ```
 
 ### 4-6. Learning Paradigms
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
-    subgraph "Supervised Learning"
+    subgraph SG1 ["Supervised Learning"]
         SL[Labeled Training Data]
         SC[Classification<br/>Discrete categories]
         SR[Regression<br/>Continuous values]
@@ -78,7 +88,7 @@ graph TB
         SL --> SR
     end
     
-    subgraph "Unsupervised Learning"
+    subgraph SG2 ["Unsupervised Learning"]
         UL[Unlabeled Data]
         UC[Clustering<br/>Group similar data]
         UA[Anomaly Detection<br/>Find outliers]
@@ -86,7 +96,7 @@ graph TB
         UL --> UA
     end
     
-    subgraph "Reinforcement Learning"
+    subgraph SG3 ["Reinforcement Learning"]
         RL[Environment Interaction]
         RA[Actions]
         RR[Rewards/Penalties]
@@ -97,67 +107,108 @@ graph TB
         RP --> RA
     end
     
-    style SL fill:#e8f5e8
-    style UL fill:#fff3e0
-    style RL fill:#f3e5f5
+    style SL fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    style UL fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style RL fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style SC fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style SR fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style UC fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style UA fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style RA fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style RR fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style RP fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+
+
 ```
 
 ### 7-11. Neural Network Architectures
 ```mermaid
-graph TB
-    subgraph "Basic Neural Network"
-        I1[Input Layer]
-        H1[Hidden Layer 1]
-        H2[Hidden Layer 2]
-        O1[Output Layer]
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}, 'flowchart': {'nodeSpacing': 50, 'rankSpacing': 100, 'curve': 'basis'}}}%%
+flowchart TB
+    subgraph SG1 ["🧠 Basic Neural Network"]
+        direction TB
+        I1["Input Layer<br/>📥 Data Input"]
+        H1["Hidden Layer 1<br/>🔄 Feature Processing"]
+        H2["Hidden Layer 2<br/>🔄 Pattern Recognition"]
+        O1["Output Layer<br/>📤 Predictions"]
         I1 --> H1
         H1 --> H2
         H2 --> O1
     end
     
-    subgraph "CNN Architecture"
-        CI[Input Image]
-        CC[Convolutional Layers]
-        CP[Pooling Layers]
-        CF[Fully Connected]
-        CO[Classification Output]
+    subgraph SG2 ["🖼️ CNN Architecture"]
+        direction TB
+        CI["Input Image<br/>📷 Raw Pixels"]
+        CC["Convolutional Layers<br/>🔍 Feature Detection"]
+        CP["Pooling Layers<br/>📉 Dimensionality Reduction"]
+        CF["Fully Connected<br/>🔗 Classification Layer"]
+        CO["Classification Output<br/>🏷️ Object Classes"]
         CI --> CC
         CC --> CP
         CP --> CF
         CF --> CO
     end
     
-    subgraph "RNN Architecture"
-        RI[Sequential Input]
-        RH[Hidden State]
-        RO[Output]
+    subgraph SG3 ["📚 RNN Architecture"]
+        direction TB
+        RI["Sequential Input<br/>📝 Time Series Data"]
+        RH["Hidden State<br/>🧠 Memory Cell"]
+        RO["Output<br/>📊 Prediction"]
         RI --> RH
         RH --> RO
-        RH -->|Memory| RH
+        RH -.->|"🔄 Memory Loop"| RH
     end
     
-    subgraph "Transformer Architecture"
-        TI[Input Tokens]
-        TE[Embedding + Positional]
-        TSA[Self-Attention]
-        TFF[Feed Forward]
-        TO[Output]
+    subgraph SG4 ["⚡ Transformer Architecture"]
+        direction TB
+        TI["Input Tokens<br/>🔤 Text Tokens"]
+        TE["Embedding + Positional<br/>📍 Position Encoding"]
+        TSA["Self-Attention<br/>👀 Context Understanding"]
+        TFF["Feed Forward<br/>⚙️ Processing Layer"]
+        TO["Output<br/>📋 Generated Text"]
         TI --> TE
         TE --> TSA
         TSA --> TFF
         TFF --> TO
     end
     
-    style I1 fill:#e3f2fd
-    style CI fill:#f1f8e9
-    style RI fill:#fff8e1
-    style TI fill:#fce4ec
+    %% Enhanced Styling for Better Visibility
+    style I1 fill:#e3f2fd,stroke:#1565c0,stroke-width:4px,color:#000
+    style CI fill:#f1f8e9,stroke:#2e7d32,stroke-width:4px,color:#000
+    style RI fill:#fff8e1,stroke:#ef6c00,stroke-width:4px,color:#000
+    style TI fill:#fce4ec,stroke:#c2185b,stroke-width:4px,color:#000
+    
+    style H1 fill:#bbdefb,stroke:#1976d2,stroke-width:3px,color:#000
+    style H2 fill:#bbdefb,stroke:#1976d2,stroke-width:3px,color:#000
+    style O1 fill:#bbdefb,stroke:#1976d2,stroke-width:3px,color:#000
+    
+    style CC fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    style CP fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    style CF fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    style CO fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    
+    style RH fill:#ffcc80,stroke:#f57c00,stroke-width:3px,color:#000
+    style RO fill:#ffcc80,stroke:#f57c00,stroke-width:3px,color:#000
+    
+    style TE fill:#f8bbd9,stroke:#e91e63,stroke-width:3px,color:#000
+    style TSA fill:#f8bbd9,stroke:#e91e63,stroke-width:3px,color:#000
+    style TFF fill:#f8bbd9,stroke:#e91e63,stroke-width:3px,color:#000
+    style TO fill:#f8bbd9,stroke:#e91e63,stroke-width:3px,color:#000
+    
+    %% Subgraph Styling
+    style SG1 fill:#f8f9fa,stroke:#1565c0,stroke-width:3px
+    style SG2 fill:#f8f9fa,stroke:#2e7d32,stroke-width:3px
+    style SG3 fill:#f8f9fa,stroke:#ef6c00,stroke-width:3px
+    style SG4 fill:#f8f9fa,stroke:#c2185b,stroke-width:3px
+
+
 ```
 
 ### 12-15. Vector Operations and Embeddings
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
-    subgraph "Vector Embeddings Process"
+    subgraph SG1 ["Vector Embeddings Process"]
         T[Text/Data Input]
         E[Embedding Model]
         V[Vector Representation]
@@ -165,7 +216,7 @@ graph TB
         E --> V
     end
     
-    subgraph "Vector Database"
+    subgraph SG2 ["Vector Database"]
         VD[(Vector Database)]
         I[Index Creation]
         S[Similarity Search]
@@ -173,7 +224,7 @@ graph TB
         I --> S
     end
     
-    subgraph "Similarity Search"
+    subgraph SG3 ["Similarity Search"]
         Q[Query Vector]
         C[Cosine Similarity]
         R[Ranked Results]
@@ -184,39 +235,64 @@ graph TB
     V --> VD
     V --> Q
     
-    style T fill:#e1f5fe
-    style VD fill:#f3e5f5
-    style Q fill:#fff3e0
+    style T fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+    style VD fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Q fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style E fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style V fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style I fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style S fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style C fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style R fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+
+
 ```
 
 ## Part II: Prompt Engineering
 
 ### 16-30. Prompt Engineering Techniques
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
-    subgraph "Basic Prompting"
+    subgraph SG1 ["Basic Prompting"]
         ZS[Zero-Shot<br/>Task without examples]
         FS[Few-Shot<br/>Task with examples]
         CoT[Chain-of-Thought<br/>Step-by-step reasoning]
     end
     
-    subgraph "Advanced Prompting"
+    subgraph SG2 ["Advanced Prompting"]
         SC[Self-Consistency<br/>Multiple reasoning paths]
         ToT[Tree-of-Thoughts<br/>Structured exploration]
         ReAct[ReAct Framework<br/>Reasoning + Acting]
     end
     
-    subgraph "Meta Techniques"
+    subgraph SG3 ["Meta Techniques"]
         MP[Meta-Prompting<br/>Prompts about prompting]
         RSI[Recursive Self-Improvement<br/>Iterative enhancement]
         MPV[Multi-Perspective<br/>Multiple viewpoints]
     end
     
-    subgraph "Enterprise Prompting"
+    subgraph SG4 ["Enterprise Prompting"]
         EP[Enterprise Patterns<br/>Business-specific templates]
         MCP[Model Context Protocol<br/>Structured interactions]
         MCPS[MCP Security<br/>Secure integrations]
     end
+    
+    style ZS fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    style SC fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style MP fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style EP fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+    style FS fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style CoT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style ToT fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style ReAct fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style RSI fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style MPV fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style MCP fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style MCPS fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+
+
+```
     
     ZS --> FS
     FS --> CoT
@@ -230,35 +306,46 @@ graph TB
     EP --> MCP
     MCP --> MCPS
     
-    style ZS fill:#e8f5e8
-    style SC fill:#fff3e0
-    style MP fill:#f3e5f5
-    style EP fill:#e1f5fe
+    style ZS fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    style SC fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style MP fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style EP fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+    style FS fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style CoT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style ToT fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style ReAct fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style RSI fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style MPV fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style MCP fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style MCPS fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+
+
 ```
 
 ## Part III: AI Application Architecture
 
 ### 31-38. Modern AI Architecture
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
-    subgraph "AI Application Stack"
+    subgraph SG1 ["AI Application Stack"]
         UI[User Interface]
         API[API Gateway]
         GS[Guardrail Service]
         ORCH[Orchestrator]
         
-        subgraph "Model Layer"
+        subgraph SG2 ["Model Layer"]
             BASE[Base LLM]
             FINE[Fine-tuned Model]
             EMB[Embedding Model]
         end
         
-        subgraph "Knowledge Layer"
+        subgraph SG3 ["Knowledge Layer"]
             VDB[(Vector Database)]
             RAG[RAG Pipeline]
         end
         
-        subgraph "Infrastructure"
+        subgraph SG4 ["Infrastructure"]
             MLOPS[MLOps Pipeline]
             MONITOR[Monitoring]
         end
@@ -278,30 +365,40 @@ graph TB
     MLOPS --> EMB
     MONITOR --> ORCH
     
-    style UI fill:#e3f2fd
-    style ORCH fill:#f1f8e9
-    style BASE fill:#fff8e1
-    style VDB fill:#fce4ec
+    style UI fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
+    style ORCH fill:#f1f8e9,stroke:#2e7d32,stroke-width:3px
+    style BASE fill:#fff8e1,stroke:#ef6c00,stroke-width:3px
+    style VDB fill:#fce4ec,stroke:#c2185b,stroke-width:3px
+    style API fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style GS fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style FINE fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style EMB fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style RAG fill:#f8bbd9,stroke:#e91e63,stroke-width:2px
+    style MLOPS fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style MONITOR fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+
+
 ```
 
 ### RAG vs Fine-Tuning Decision Matrix
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
-    subgraph "RAG Approach"
+    subgraph SG1 ["RAG Approach"]
         RD[Dynamic Knowledge<br/>External data integration]
         RC[Lower Cost<br/>No model retraining]
         RS[Better Security<br/>Data not in model]
         RU[Easy Updates<br/>Real-time information]
     end
     
-    subgraph "Fine-Tuning Approach"
+    subgraph SG2 ["Fine-Tuning Approach"]
         FP[Better Performance<br/>Task-specific optimization]
         FL[Lower Latency<br/>No external lookups]
         FC[Consistent Behavior<br/>Stable responses]
         FD[Domain Expertise<br/>Specialized knowledge]
     end
     
-    subgraph "Hybrid Architecture"
+    subgraph SG3 ["Hybrid Architecture"]
         H[Combines Both Approaches<br/>Optimal for complex scenarios]
         HFT[Fine-tuned base model]
         HRAG[RAG for current data]
@@ -309,15 +406,24 @@ graph TB
         H --> HRAG
     end
     
-    style RD fill:#e8f5e8
-    style FP fill:#fff3e0
-    style H fill:#f3e5f5
+    style RD fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    style FP fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style H fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style RC fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style RS fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style RU fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style FL fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style FC fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style FD fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style HFT fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
+    style HRAG fill:#ce93d8,stroke:#8e24aa,stroke-width:2px
 ```
 
 ## Part IV: AI Security
 
 ### 39-53. AI Security Landscape
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Attack Surface"
         TS[Training Stage<br/>Data poisoning, backdoors]
@@ -347,13 +453,24 @@ graph TB
     JB --> ZT
     ADV --> SC
     
-    style TS fill:#ffcdd2
-    style PI fill:#fff3e0
-    style GR fill:#c8e6c9
+    style TS fill:#ffcdd2,stroke:#c62828,stroke-width:3px
+    style PI fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style GR fill:#c8e6c9,stroke:#2e7d32,stroke-width:3px
+    style IS fill:#ffcdd2,stroke:#c62828,stroke-width:2px
+    style DS fill:#ffcdd2,stroke:#c62828,stroke-width:2px
+    style PL fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style JB fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style ADV fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style CF fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style ZT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style SC fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+
+
 ```
 
 ### Enterprise AI Security Framework
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Security Layers"
         PERI[Perimeter Security<br/>Network & access controls]
@@ -379,14 +496,24 @@ graph TB
     SIEM --> IR
     IR --> RT
     
-    style PERI fill:#e3f2fd
-    style SOC fill:#f1f8e9
+    style PERI fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
+    style SOC fill:#f1f8e9,stroke:#2e7d32,stroke-width:3px
+    style APP fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    style DATA fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    style MODEL fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    style INFRA fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    style SIEM fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style IR fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style RT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+
+
 ```
 
 ## Part V: AI Safety and Governance
 
 ### 54-61. AI Safety Framework
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "AI Alignment"
         AP[Alignment Problem<br/>Human values alignment]
@@ -413,15 +540,23 @@ graph TB
     CF --> RT
     RT --> CT
     
-    style AP fill:#ffcdd2
-    style CAI fill:#fff3e0
-    style GR fill:#c8e6c9
+    style AP fill:#ffcdd2,stroke:#c62828,stroke-width:3px
+    style CAI fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style GR fill:#c8e6c9,stroke:#2e7d32,stroke-width:3px
+    style RTA fill:#ffcdd2,stroke:#c62828,stroke-width:2px
+    style CTL fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style CF fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style RT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style CT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+
+
 ```
 
 ## Part VI: AI Agents
 
 ### 62-69. Agentic Systems Architecture
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Agent Components"
         LLM[Language Model<br/>Core reasoning engine]
@@ -457,15 +592,27 @@ graph TB
     COORD --> SPEC2
     COORD --> SPEC3
     
-    style LLM fill:#e1f5fe
-    style PERC fill:#f1f8e9
-    style COORD fill:#fff8e1
+    style LLM fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+    style PERC fill:#f1f8e9,stroke:#2e7d32,stroke-width:3px
+    style COORD fill:#fff8e1,stroke:#ef6c00,stroke-width:3px
+    style PLAN fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style MEM fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style TOOLS fill:#b3e5fc,stroke:#0288d1,stroke-width:2px
+    style THINK fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style ACT fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style LEARN fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style SPEC1 fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style SPEC2 fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+    style SPEC3 fill:#ffcc80,stroke:#f57c00,stroke-width:2px
+
+
 ```
 
 ## Part VII: Enterprise Implementation
 
 ### 70-75. Enterprise AI Implementation
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Readiness Assessment"
         TA[Technical Assessment<br/>Infrastructure & skills]
@@ -505,10 +652,12 @@ graph TB
     style TA fill:#e8f5e8
     style P1 fill:#fff3e0
     style DEV fill:#f3e5f5
+
 ```
 
 ### AI Platform Architecture
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Data Platform"
         DL[Data Lake<br/>Raw data storage]
@@ -544,12 +693,14 @@ graph TB
     style DL fill:#e3f2fd
     style EXP fill:#f1f8e9
     style API fill:#fff8e1
+
 ```
 
 ## Missing Concepts - Additional Core Topics (25-30)
 
 ### 25-30. Advanced Prompt Engineering and Enterprise Integration
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Advanced Prompting Techniques"
         MPP[Multi-Perspective Prompting<br/>Multiple viewpoints analysis]
@@ -572,12 +723,14 @@ graph TB
     style MPP fill:#e8f5e8
     style MCPF fill:#fff3e0
     style EAIP fill:#f3e5f5
+
 ```
 
 ## Advanced Security Concepts (39-53)
 
 ### AI Security Threat Landscape
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Attack Vectors"
         AS[AI Attack Surface<br/>Training, Inference, Deployment]
@@ -613,10 +766,12 @@ graph TB
     style AS fill:#ffcdd2
     style DPI fill:#fff3e0
     style MI fill:#f3e5f5
+
 ```
 
 ### Enterprise Security Framework (50-53)
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "MCP Security Architecture"
         MCPSA[MCP Server Security<br/>Authentication & authorization]
@@ -639,12 +794,14 @@ graph TB
     style MCPSA fill:#c8e6c9
     style EASF fill:#e1f5fe
     style ZTAI fill:#fff3e0
+
 ```
 
 ## AI Safety and Governance (54-61)
 
 ### AI Safety and Alignment Framework
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Core Safety Principles"
         AAP[AI Alignment Problem<br/>Human values alignment]
@@ -672,12 +829,14 @@ graph TB
     style CAI fill:#fff3e0
     style AG fill:#c8e6c9
     style ART fill:#f3e5f5
+
 ```
 
 ## Complete Agent Architecture (62-69)
 
 ### Advanced Agentic Systems
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Agent Core Components"
         AAA[Anatomy of AI Agent<br/>Core reasoning engine]
@@ -705,12 +864,14 @@ graph TB
     style PM fill:#f1f8e9
     style STMEM fill:#fff8e1
     style MAS fill:#fce4ec
+
 ```
 
 ## Enterprise Implementation Framework (70-75)
 
 ### Enterprise AI Implementation Strategy
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Readiness & Planning"
         EARA[Enterprise AI Readiness<br/>Assessment framework]
@@ -733,12 +894,14 @@ graph TB
     style EARA fill:#e8f5e8
     style MLAIF fill:#fff3e0
     style CMAAI fill:#f3e5f5
+
 ```
 
 ## Advanced Enterprise Concepts (76-90)
 
 ### Edge AI and Advanced Technologies (76-80)
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Distributed AI"
         EADI[Edge AI & Distributed Intelligence<br/>Local processing]
@@ -756,10 +919,12 @@ graph TB
     style EADI fill:#e1f5fe
     style FLCAI fill:#f1f8e9
     style MCO fill:#fff8e1
+
 ```
 
 ### AI Ethics and Governance (81-85)
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Ethics & Compliance"
         AERAIF[AI Ethics<br/>Responsible AI frameworks]
@@ -777,10 +942,12 @@ graph TB
     style AERAIF fill:#c8e6c9
     style RCAIG fill:#fff3e0
     style AIIRC fill:#f3e5f5
+
 ```
 
 ### Future-Ready Enterprise AI (86-90)
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Sustainable & Inclusive AI"
         GAISC[Green AI<br/>Sustainable computing]
@@ -798,10 +965,12 @@ graph TB
     style GAISC fill:#c8e6c9
     style AIAID fill:#fff3e0
     style QAIFT fill:#f3e5f5
+
 ```
 
 ### Comprehensive Technology Evolution Timeline
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 timeline
     title Complete AI Technology Evolution (All 90 Concepts)
     
@@ -860,9 +1029,11 @@ timeline
         Advanced Concepts : Edge AI
                          : Ethics & Compliance
                          : Future Technologies
+```
 
 ### AI Ethics and Governance Framework
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Ethical Principles"
         FAIR[Fairness<br/>Non-discrimination]
@@ -898,10 +1069,12 @@ graph TB
     style FAIR fill:#c8e6c9
     style EB fill:#fff3e0
     style BIA fill:#f3e5f5
+
 ```
 
 ### Comprehensive AI Operations Lifecycle
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Development Lifecycle"
         REQ[Requirements<br/>Business needs]
@@ -940,10 +1113,12 @@ graph TB
     style REQ fill:#e8f5e8
     style DEPLOY fill:#fff3e0
     style ASSESS fill:#f3e5f5
+
 ```
 
 ### Future AI Technologies Roadmap
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 timeline
     title AI Technology Evolution
     
@@ -977,6 +1152,7 @@ timeline
 
 ## Integration Architecture Overview
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph "Enterprise AI Ecosystem"
         subgraph "Business Layer"
@@ -1040,6 +1216,7 @@ graph TB
     style DATA_LAKE fill:#fff8e1
     style COMPUTE fill:#fce4ec
     style POLICY fill:#f3e5f5
+
 ```
 
 ---
