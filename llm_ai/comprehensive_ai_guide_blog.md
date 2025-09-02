@@ -1,5 +1,5 @@
 ---
-title: A Complete Guide to Understanding and Implementing Artificial Intelligence
+title: A Complete Guide 
 layout: mermaid
 nav_order: 3
 parent: Large Language Models

@@ -1,5 +1,5 @@
 ---
-title: Enterprise AI Implementation Guide
+title: AI Implementation Guide
 layout: default
 nav_order: 1
 parent: Large Language Models
