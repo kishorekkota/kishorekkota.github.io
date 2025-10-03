@@ -356,7 +356,8 @@ graph TB
 ## Part III: AI Application Architecture
 
 ### 31-38. Modern AI Architecture
-```mermaid
+
+<div class="mermaid">
 %%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333333', 'primaryBorderColor': '#cccccc', 'lineColor': '#666666'}}}%%
 graph TB
     subgraph SG1 ["AI Application Stack"]
@@ -407,9 +408,7 @@ graph TB
     style RAG fill:#f8bbd9,stroke:#e91e63,stroke-width:2px
     style MLOPS fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
     style MONITOR fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
-
-
-```
+</div>
 
 ### RAG vs Fine-Tuning Decision Matrix
 ```mermaid
