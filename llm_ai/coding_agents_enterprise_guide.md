@@ -765,7 +765,446 @@ Adoption model:
 | Controlled autonomy | Low-risk automated fixes and runbook actions with approval and audit logs |
 
 
-## 8. Managing Development and Deployment with Agents
+
+## 8. GitHub Copilot: Instructions, Prompt Files, Coding Agent, and Team Conventions
+
+GitHub Copilot is not only an autocomplete tool. In a mature engineering environment it becomes a set of AI-assisted workflows across the IDE, pull requests, issues, repository instructions, reusable prompts, and coding agents. The most important enterprise practice is to move from ad-hoc prompting to version-controlled conventions that keep generated work aligned with architecture, testing, security, and release standards.
+
+### GitHub Copilot concepts
+
+| Concept | Purpose | Enterprise usage |
+| --- | --- | --- |
+| Copilot Chat | Interactive assistant in IDE or GitHub UI | Ask questions, explain code, generate tests, review changes |
+| Code completion | Inline coding suggestions | Accelerate common coding patterns while preserving developer review |
+| Repository custom instructions | Persistent repo-level guidance | Keep Copilot aligned to project standards and architecture |
+| Instruction files | Targeted instructions for specific file types or folders | Apply different rules for APIs, UI, tests, infrastructure, docs |
+| Prompt files | Reusable prompt templates | Standardize workflows such as impact analysis, test generation, security review, release notes |
+| Copilot coding agent | Issue-to-branch/PR implementation workflow | Let an agent implement scoped tasks with validation and PR evidence |
+| Pull request summaries/review support | Summarize and review PR changes | Improve review speed and consistency |
+| Extensions and MCP-like integrations | Connect tools and context | Bring issue, repo, CI, security, or operational data into the assistant context |
+
+### Copilot instruction file conventions
+
+The common repository-level convention is:
+
+```text
+.github/
+  copilot-instructions.md
+```
+
+Use this file for global repository rules that should influence Copilot across the project.
+
+Recommended content:
+
+```markdown
+# Copilot Instructions
+
+## Repository overview
+Describe what the system does, core modules, and ownership.
+
+## Architecture principles
+- Follow the existing layered architecture.
+- Do not introduce new frameworks without approval.
+- Keep API contracts backward compatible unless explicitly requested.
+
+## Coding standards
+- Follow existing naming, formatting, and error-handling conventions.
+- Prefer existing utilities over new helper libraries.
+- Keep changes scoped to the requested task.
+
+## Testing standards
+- Add or update tests for behavior changes.
+- Run the smallest relevant test first, then broader regression tests.
+- Include contract tests when APIs change.
+
+## Security standards
+- Never log secrets or sensitive data.
+- Validate all external input.
+- Use existing authentication and authorization patterns.
+
+## Pull request expectations
+- Explain user-visible changes.
+- List validation commands and results.
+- Call out migration, deployment, rollback, and monitoring needs.
+```
+
+Good instructions are:
+
+- Short enough to be consistently followed
+- Specific to the repository
+- Written as rules, not vague preferences
+- Reviewed like code
+- Updated when architectural decisions change
+- Connected to tests and quality gates
+
+Avoid:
+
+- Long documents copied from generic standards
+- Contradictory instructions
+- Rules that are not enforced anywhere
+- Secrets, credentials, or private operational details
+- Instructions that encourage bypassing review or CI
+
+### Targeted instruction files
+
+For larger repositories, a single instruction file is not enough. Use targeted instruction files for specific areas.
+
+Example structure:
+
+```text
+.github/
+  copilot-instructions.md
+  instructions/
+    api.instructions.md
+    frontend.instructions.md
+    tests.instructions.md
+    infrastructure.instructions.md
+    security.instructions.md
+```
+
+Example targeted instruction pattern:
+
+```markdown
+---
+applyTo: "src/api/**/*.ts"
+---
+
+# API Instructions
+
+- Preserve backward-compatible response schemas.
+- Validate request payloads at the boundary.
+- Return standardized error objects.
+- Add contract tests for public API changes.
+- Update OpenAPI documentation when routes change.
+```
+
+Use targeted instructions when:
+
+- Different modules use different frameworks
+- Test files need different conventions from production files
+- Infrastructure code needs stricter approval rules
+- Security-sensitive code needs additional checks
+- Documentation has navigation or formatting standards
+
+### Copilot prompt files
+
+Prompt files are reusable workflow prompts. They help teams avoid rewriting long prompts and reduce inconsistent results.
+
+Common convention:
+
+```text
+.github/
+  prompts/
+    analyze-impact.prompt.md
+    generate-tests.prompt.md
+    review-pr.prompt.md
+    prepare-release.prompt.md
+    security-review.prompt.md
+    incident-triage.prompt.md
+```
+
+Example `analyze-impact.prompt.md`:
+
+```markdown
+# Analyze Impact
+
+Analyze the requested change before implementation.
+
+Return:
+1. Business capability impacted
+2. Modules and files likely affected
+3. APIs, events, database tables, configuration, and dependencies affected
+4. Tests that should be run or added
+5. Backward compatibility risks
+6. Deployment and rollback considerations
+7. Questions that must be answered before coding
+
+Rules:
+- Read existing code before proposing changes.
+- Prefer existing patterns.
+- Do not implement until the plan is approved.
+```
+
+Example `generate-tests.prompt.md`:
+
+```markdown
+# Generate Relevant Tests
+
+Create or update tests for the current change.
+
+Focus on:
+- Changed behavior
+- Edge cases
+- Error paths
+- Backward compatibility
+- Contract expectations
+- Regression coverage for the bug or feature
+
+Rules:
+- Use existing test frameworks and naming conventions.
+- Do not add new test libraries unless explicitly approved.
+- Prefer focused tests first, then broader integration tests when needed.
+```
+
+Example `architecture-drift-check.prompt.md`:
+
+```markdown
+# Architecture Drift Check
+
+Review the proposed change for architecture drift.
+
+Check:
+- Does the change follow existing module boundaries?
+- Does it introduce a new dependency where an existing pattern exists?
+- Does it duplicate existing business logic?
+- Does it bypass established service, repository, event, or API layers?
+- Does it weaken observability, security, or operational standards?
+- Should an ADR be created or updated?
+
+Return blocking issues, non-blocking concerns, and recommended corrections.
+```
+
+### GitHub Copilot vs Claude Code concepts
+
+| Capability | GitHub Copilot convention | Claude Code convention | Practical interpretation |
+| --- | --- | --- | --- |
+| Repository-wide instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Store durable project rules and validation expectations |
+| Targeted instructions | `.github/instructions/*.instructions.md` or editor-supported instruction files | Additional project memory or scoped instructions | Use when modules need different rules |
+| Reusable prompts | `.github/prompts/*.prompt.md` | Slash commands or command prompt files | Standardize repeated workflows |
+| Specialized agent roles | Copilot coding agent task context and prompts | Subagents in `.claude/agents/` | Use role specialization for review, test, security, release, SRE |
+| Reusable task packages | Prompt libraries and workspace conventions | Skills in `.claude/skills/` | Package repeatable enterprise workflows |
+| Automatic enforcement | GitHub Actions, branch protection, code owners | Hooks plus CI/policy tools | Do not rely on prompt text alone for governance |
+| External context | GitHub issues, PRs, code search, extensions | MCP servers and tools | Use approved integrations with least privilege |
+| Change delivery | Issue-to-PR agent or IDE-assisted PR | Terminal agent branch/PR workflow | Require PR review and validation evidence |
+
+### How to prevent coding and architecture drift
+
+AI coding drift happens when generated code slowly diverges from intended architecture, naming, testing, security, and operational practices. Preventing drift requires instructions, examples, automated checks, and review gates.
+
+Use this layered approach:
+
+1. **Document rules** in Copilot instructions and Claude `CLAUDE.md`.
+2. **Provide examples** by pointing agents to existing modules that represent the preferred pattern.
+3. **Use prompt files and Skills** for repeatable workflows.
+4. **Add automated checks** in CI for formatting, tests, API compatibility, security, and dependency policy.
+5. **Require human review** for design, domain behavior, and production risk.
+6. **Update instructions** when reviewers repeatedly correct the same agent behavior.
+
+Architecture drift checklist:
+
+- Does the change use existing modules and abstractions?
+- Does it preserve service boundaries?
+- Does it avoid duplicating domain logic?
+- Does it use existing configuration, logging, metrics, and error handling patterns?
+- Does it keep public API contracts backward compatible?
+- Does it avoid unnecessary new dependencies?
+- Does it follow existing deployment and feature flag patterns?
+- Does it update documentation or ADRs when architecture changes?
+
+### Teaching agents to learn from the existing system
+
+Agents should not start by generating code from a generic pattern. They should first learn the local system.
+
+A strong agent workflow asks the agent to inspect:
+
+- Similar features already implemented
+- Existing tests for the same module
+- Error handling and logging conventions
+- API request/response models
+- Data access patterns
+- Configuration and feature flag usage
+- Security and authorization helpers
+- CI workflow and validation commands
+- Documentation and ADRs
+
+Recommended prompt:
+
+```markdown
+Before implementing, inspect the existing codebase for similar functionality. Identify the files that show the preferred pattern. Explain the pattern and then apply the smallest consistent change. Do not introduce a new architecture if an existing pattern already solves the problem.
+```
+
+Expected agent output before coding:
+
+- Similar files reviewed
+- Pattern discovered
+- Proposed impacted files
+- Tests to add or update
+- Risks and assumptions
+- Validation commands
+
+### Scope and impact analysis before code changes
+
+Every agent-assisted change should begin with impact analysis.
+
+Impact analysis dimensions:
+
+| Dimension | Questions |
+| --- | --- |
+| Functional | What user journey or business capability changes? |
+| Code | Which modules, files, APIs, events, jobs, or UI components are affected? |
+| Data | Are schemas, migrations, retention, or PII handling affected? |
+| Integration | Are downstream or upstream contracts affected? |
+| Security | Are auth, authorization, secrets, validation, or audit logs affected? |
+| Testing | Which unit, integration, contract, regression, and smoke tests are relevant? |
+| Release | Are feature flags, configuration, rollback, or deployment order affected? |
+| SRE | Are metrics, logs, traces, dashboards, alerts, or runbooks affected? |
+
+Example Copilot or Claude prompt:
+
+```markdown
+Perform impact analysis for this requested change. Do not edit files yet. Read the repository and identify similar patterns. Return impacted modules, tests, architecture concerns, security concerns, release concerns, and open questions. Then propose the smallest safe implementation plan.
+```
+
+### Strong testing approach for AI-generated changes
+
+AI-generated code should raise the testing bar, not lower it. The agent should select tests based on impact instead of running random or excessive test suites.
+
+Testing pyramid for agent changes:
+
+1. **Unit tests** for changed functions, services, validators, and edge cases.
+2. **Contract tests** for API, event, schema, or integration boundary changes.
+3. **Integration tests** for database, external service, workflow, or message processing changes.
+4. **End-to-end or smoke tests** for critical user journeys.
+5. **Regression tests** for bugs, especially when the failure mode is known.
+6. **Security tests** for authentication, authorization, input validation, and sensitive data handling.
+7. **Performance tests** for changes that affect hot paths, queries, batch jobs, or high-volume APIs.
+
+Agent testing rules:
+
+- First run the smallest test that proves the change.
+- Add or update tests before broad refactoring.
+- Run broader tests after focused tests pass.
+- Do not delete failing tests to make the build pass.
+- Document any unrelated pre-existing failures.
+- Use existing test frameworks and fixtures.
+- Include validation evidence in the pull request.
+
+Relevant test selection example:
+
+| Change type | Tests to prioritize |
+| --- | --- |
+| Request validation | Unit tests, API contract tests, negative tests |
+| UI form change | Component tests, accessibility checks, relevant E2E smoke test |
+| Database query change | Repository tests, integration tests, performance check for large data |
+| Event schema change | Producer/consumer contract tests, backward compatibility tests |
+| Authentication change | Security tests, authorization matrix tests, audit log checks |
+| Deployment config change | Static config validation, environment smoke test, rollback check |
+| Incident fix | Regression test that reproduces the incident symptom |
+
+### Recommended enterprise file structure for AI coding standards
+
+A combined Copilot and Claude setup can look like this:
+
+```text
+repo-root/
+  CLAUDE.md
+  .github/
+    copilot-instructions.md
+    instructions/
+      api.instructions.md
+      tests.instructions.md
+      security.instructions.md
+      infrastructure.instructions.md
+    prompts/
+      analyze-impact.prompt.md
+      generate-tests.prompt.md
+      architecture-drift-check.prompt.md
+      prepare-release.prompt.md
+      incident-triage.prompt.md
+  .claude/
+    agents/
+      code-reviewer.md
+      test-engineer.md
+      security-reviewer.md
+      release-manager.md
+      sre-triage.md
+    skills/
+      release-readiness/
+        SKILL.md
+      incident-triage/
+        SKILL.md
+      architecture-drift-check/
+        SKILL.md
+```
+
+Use both ecosystems consistently:
+
+- Put shared repository truths in both `CLAUDE.md` and `.github/copilot-instructions.md` or generate one from a source-of-truth template.
+- Put workflow-specific prompts in `.github/prompts/` for Copilot users.
+- Put reusable Claude workflows in `.claude/skills/`.
+- Put specialized Claude reviewers in `.claude/agents/`.
+- Enforce mandatory rules in CI, branch protection, code owners, and policy-as-code.
+
+### Correct implementation workflow with Copilot or Claude
+
+```mermaid
+flowchart TD
+    A[User request or issue] --> B[Read instructions and conventions]
+    B --> C[Analyze existing system patterns]
+    C --> D[Perform scope and impact analysis]
+    D --> E[Create implementation plan]
+    E --> F[Human approval for non-trivial change]
+    F --> G[Implement smallest safe change]
+    G --> H[Add or update relevant tests]
+    H --> I[Run focused validation]
+    I --> J[Run broader regression or CI checks]
+    J --> K[Architecture and security drift review]
+    K --> L[Prepare PR summary with evidence]
+    L --> M[Human review and approval]
+    M --> N[Release readiness and SRE monitoring]
+```
+
+Definition of correct AI coding implementation:
+
+- The agent read repository instructions before changing code.
+- The agent identified existing patterns and reused them.
+- The agent explained impact and scope.
+- The agent changed only necessary files.
+- The agent added or updated relevant tests.
+- The agent ran appropriate validation.
+- The agent checked architecture, security, and operational drift.
+- The pull request contains summary, validation, risks, and rollback notes.
+- Humans reviewed domain correctness and production risk.
+
+### Prompt template: full lifecycle coding task
+
+Use this reusable prompt when asking Copilot or Claude to implement a change:
+
+```markdown
+You are working in this repository. Before making changes:
+
+1. Read the repository instructions and relevant documentation.
+2. Inspect existing implementations similar to this request.
+3. Explain the existing pattern and why it applies.
+4. Perform impact analysis across code, data, API, security, tests, release, and SRE.
+5. Propose the smallest safe implementation plan.
+6. Wait for approval if the change is non-trivial.
+
+When implementing:
+
+1. Follow existing architecture and naming conventions.
+2. Do not introduce new dependencies unless required and approved.
+3. Add or update focused tests for behavior changes.
+4. Run relevant validation commands.
+5. Check for architecture drift and security risk.
+6. Produce a PR-ready summary with validation evidence and rollback notes if applicable.
+```
+
+### Governance checklist for Copilot and Claude adoption
+
+- Are repository instructions version-controlled?
+- Are prompt files and Skills reviewed by architecture/security/SRE owners?
+- Are critical rules enforced in CI instead of only prompts?
+- Are generated changes traceable to a user request or ticket?
+- Are tests required for behavior changes?
+- Are secret scanning and dependency scanning enabled?
+- Are production actions separated from development actions?
+- Are agent permissions scoped by repository and environment?
+- Are repeated review comments converted into better instructions or prompts?
+- Are metrics tracked for quality, speed, drift, and incident outcomes?
+
+
+## 9. Managing Development and Deployment with Agents
 
 ### Agent-assisted software delivery lifecycle
 
@@ -821,7 +1260,7 @@ flowchart LR
 - Toil identification
 - Post-incident action item tracking
 
-## 9. SRE Example: Agent-Assisted Incident Triage
+## 10. SRE Example: Agent-Assisted Incident Triage
 
 Scenario: API latency increases after a new deployment.
 
@@ -847,7 +1286,7 @@ Example output expected from the agent:
 - Required approval: incident commander
 - Evidence: deployment ID, dashboard link, top trace IDs, error log samples
 
-## 10. Product Release Example: Agent-Assisted Release Management
+## 11. Product Release Example: Agent-Assisted Release Management
 
 Scenario: A team is releasing a new customer onboarding workflow.
 
@@ -876,7 +1315,7 @@ Release maturity pattern:
 6. Release manager approves deployment.
 7. Agent monitors deployment and posts health summaries.
 
-## 11. Controls Required for Enterprise Adoption
+## 12. Controls Required for Enterprise Adoption
 
 ### Security controls
 
@@ -914,7 +1353,7 @@ Release maturity pattern:
 - Record incident decisions.
 - Add automatic rollback only after strong maturity is demonstrated.
 
-## 12. Maturity Model for Coding Agents
+## 13. Maturity Model for Coding Agents
 
 | Level | Name | Characteristics | Recommended focus |
 | --- | --- | --- | --- |
@@ -925,7 +1364,7 @@ Release maturity pattern:
 | 4 | SRE augmentation | Agents triage incidents and recommend runbook actions | Observability integration, incident timelines, approval workflows |
 | 5 | Governed autonomy | Agents execute low-risk approved actions automatically | Risk scoring, automatic rollback, continuous learning |
 
-## 13. Metrics to Track
+## 14. Metrics to Track
 
 ### Delivery metrics
 
@@ -960,7 +1399,7 @@ Release maturity pattern:
 - Policy violation rate
 - Secret exposure attempts blocked
 
-## 14. Practical Enterprise Rollout Plan
+## 15. Practical Enterprise Rollout Plan
 
 ### Phase 1: Foundation
 
@@ -998,7 +1437,7 @@ Release maturity pattern:
 - Continuously evaluate quality, safety, and business outcomes.
 - Expand autonomy only where metrics prove reliability.
 
-## 15. Example Agent Operating Model
+## 16. Example Agent Operating Model
 
 | Role | Human owner | Agent support |
 | --- | --- | --- |
@@ -1010,7 +1449,7 @@ Release maturity pattern:
 | Release manager | Owns release coordination | Builds release package and deployment checklist |
 | SRE | Owns reliability and operations | Triage, runbook recommendations, postmortem drafts |
 
-## 16. Common Anti-Patterns
+## 17. Common Anti-Patterns
 
 - Giving agents broad production access too early
 - Accepting generated code without human review
@@ -1023,7 +1462,7 @@ Release maturity pattern:
 - Running agents with long-lived credentials
 - Automating remediation without runbooks
 
-## 17. Definition of Done for Agent-Generated Changes
+## 18. Definition of Done for Agent-Generated Changes
 
 A mature team should require:
 
@@ -1038,7 +1477,7 @@ A mature team should require:
 - Observability updates for production changes
 - Audit record of agent actions
 
-## 18. Summary
+## 19. Summary
 
 Coding agents can significantly mature enterprise delivery when they are treated as governed engineering automation. The safest adoption path is incremental: start with documentation and test generation, move to pull-request automation, then release support, then SRE augmentation, and only later limited autonomous operations.
 
