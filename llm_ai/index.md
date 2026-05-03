@@ -14,6 +14,7 @@ This section covers comprehensive information about Large Language Models and AI
 - [Complete Enterprise AI Implementation Guide](llm_ai_quickly.md) - 90+ essential concepts for AI development, security, and deployment
 - [AI Concepts Visualizations](ai_concepts_visualizations.md) - Comprehensive MermaidJS diagrams for all AI concepts
 - [AI Best Practices](../llm_bestpractices.md) - Implementation best practices and guidelines
+- [Coding Agents Enterprise Guide](coding_agents_enterprise_guide.md) - Comprehensive guide for agentic development, release automation, and SRE operations
 
 ## Overview
 
