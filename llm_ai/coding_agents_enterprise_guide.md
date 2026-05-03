@@ -392,7 +392,380 @@ Implementation steps:
 5. Store every decision and action as audit evidence.
 6. Start with documentation and test automation before production changes.
 
-## 7. Managing Development and Deployment with Agents
+
+## 7. Claude Code: Conventions, Agents, Skills, Commands, and Hooks
+
+Claude Code is an agentic coding environment that works from a terminal or development workflow and can inspect code, edit files, run commands, invoke tools, use specialized subagents, and follow repository-specific instructions. For enterprise teams, the most important concept is not only the chat interface; it is the ability to encode engineering conventions and repeatable processes so every agent-assisted change follows the same standards.
+
+### Core Claude Code concepts
+
+| Concept | Purpose | How enterprise teams should use it |
+| --- | --- | --- |
+| `CLAUDE.md` | Project memory and repository instructions | Store coding standards, build/test commands, architecture rules, security expectations, and PR rules |
+| Subagents / agents | Specialized assistants with focused responsibilities | Define agents for code review, testing, documentation, release, SRE, security, migration, and architecture |
+| Skills | Reusable task modules with instructions and optional assets/scripts | Package repeatable workflows such as release-note generation, incident triage, API documentation, or migration checklists |
+| Slash commands | Named shortcuts for common prompts or workflows | Standardize repetitive actions such as `/review-pr`, `/write-tests`, `/prepare-release`, `/triage-incident` |
+| Hooks | Lifecycle automation around agent actions | Enforce policy checks, logging, formatting, test execution, approval prompts, and security gates |
+| Tool permissions | Controls for what the agent can read, edit, or run | Apply least privilege and separate development, release, and production capabilities |
+| MCP servers | External tool integrations | Connect approved systems such as GitHub, Jira, ServiceNow, Backstage, observability, security scanners, and cloud APIs |
+
+### `CLAUDE.md`: building repository conventions
+
+A `CLAUDE.md` file is the best place to define how Claude Code should behave in a specific repository. It should be treated like an engineering operating manual for agents.
+
+Recommended sections:
+
+1. **Repository purpose**: what the system does and who owns it.
+2. **Architecture overview**: major modules, boundaries, and integration points.
+3. **Build and test commands**: exact commands for linting, unit tests, integration tests, and local builds.
+4. **Coding conventions**: naming, formatting, error handling, logging, API patterns, dependency rules.
+5. **Security rules**: secret handling, authentication patterns, input validation, data protection, dependency scanning.
+6. **Testing expectations**: when to add unit, contract, integration, or end-to-end tests.
+7. **Pull request expectations**: summary format, validation evidence, risk notes, rollback notes.
+8. **Non-goals and guardrails**: files not to edit, commands not to run, production actions that require approval.
+9. **Domain glossary**: business terms and domain-specific concepts.
+10. **Known pitfalls**: flaky tests, migration risks, compatibility constraints, operational constraints.
+
+Example convention structure:
+
+```markdown
+# CLAUDE.md
+
+## Repository purpose
+This service manages customer onboarding workflows and exposes REST APIs used by web and mobile channels.
+
+## Required validation
+- Run unit tests before finalizing code changes.
+- Run API contract tests when request or response schemas change.
+- Run security scanning when dependencies or authentication logic changes.
+
+## Coding conventions
+- Keep changes small and scoped to the user request.
+- Do not modify unrelated formatting.
+- Add tests for behavior changes.
+- Preserve backward compatibility for public APIs unless explicitly requested.
+
+## Security rules
+- Never print or commit secrets.
+- Validate all external input.
+- Use existing authentication and authorization helpers.
+- Do not introduce new dependencies without review.
+
+## Pull request requirements
+- Summarize user-visible changes.
+- List validation commands and results.
+- Document risks, migrations, feature flags, and rollback plan when applicable.
+```
+
+How to mature `CLAUDE.md`:
+
+- Start with build/test commands and basic coding standards.
+- Add domain glossary and architecture boundaries.
+- Add security and compliance requirements.
+- Add release and rollback expectations.
+- Add SRE runbook links and incident conventions.
+- Review and update it after every failed agent task.
+
+### Claude Code subagents: defining specialized agents
+
+Subagents are specialized agent profiles that focus Claude on a role. Instead of asking one general agent to do everything, define narrow agents with clear responsibilities and tool boundaries.
+
+Typical enterprise subagents:
+
+| Agent | Responsibility | Allowed tools | Human approval needed |
+| --- | --- | --- | --- |
+| `code-reviewer` | Review diffs for correctness, maintainability, and missing tests | Read files, inspect diffs | No, if read-only |
+| `test-engineer` | Identify impacted tests, generate test cases, run test commands | Read/write tests, run test commands | No for local tests |
+| `security-reviewer` | Check authentication, authorization, input validation, secrets, dependency risk | Read code, run scanners | Yes for policy exceptions |
+| `release-manager` | Generate release notes, deployment checklist, rollback plan | Read commits, PRs, CI results | Yes before deployment |
+| `sre-triage` | Analyze alerts, logs, traces, dashboards, and recent deployments | Read observability systems | Yes before remediation |
+| `migration-agent` | Apply repeated mechanical changes across services | Read/write code, run tests | Yes for broad changes |
+| `architect` | Draft ADRs, dependency maps, and option analysis | Read docs/code | Yes for final decisions |
+
+Recommended agent definition fields:
+
+- Name and purpose
+- When to use the agent
+- Inputs required
+- Outputs expected
+- Allowed tools
+- Explicit boundaries
+- Escalation rules
+- Validation checklist
+
+Example subagent definition pattern:
+
+```markdown
+---
+name: code-reviewer
+description: Reviews pull request diffs for correctness, maintainability, testing gaps, and security concerns. Use after code changes or before opening a PR.
+tools: Read, Grep, Git
+---
+
+You are a senior code reviewer. Focus on correctness, maintainability, test coverage, security, and operational risk.
+
+Do:
+- Review only the changed files unless broader context is required.
+- Identify blocking issues separately from suggestions.
+- Check whether tests match the behavior change.
+- Call out security and backward compatibility risks.
+
+Do not:
+- Rewrite code unless explicitly asked.
+- Approve changes without validation evidence.
+```
+
+### Skills: reusable Claude capabilities
+
+A Skill packages repeatable instructions, references, scripts, and templates so Claude can perform a task consistently. Skills are useful when a process is repeated across projects or teams.
+
+Common locations:
+
+- Personal skills: user-level Claude configuration, useful for individual workflows.
+- Project skills: repository-level `.claude/skills/`, useful for team standards.
+- Enterprise skills: centrally distributed skills, useful for common governance and platform processes.
+
+A typical Skill contains:
+
+```text
+.claude/
+  skills/
+    release-readiness/
+      SKILL.md
+      references/
+        release-policy.md
+        rollback-template.md
+      scripts/
+        collect_ci_results.sh
+```
+
+A `SKILL.md` should include frontmatter and detailed instructions:
+
+```markdown
+---
+name: release-readiness
+description: Prepare a release readiness package with scope, risk, validation evidence, rollback plan, and SRE checklist. Use before production deployment or release approval.
+---
+
+## Goal
+Create a complete release readiness summary for reviewers.
+
+## Inputs
+- Pull request or release branch
+- Related issue or Jira ticket
+- CI results
+- Deployment environment
+
+## Steps
+1. Identify changed services, APIs, database migrations, feature flags, and configuration changes.
+2. Collect build, test, lint, and security evidence.
+3. Summarize customer impact and operational risk.
+4. Produce rollback and monitoring steps.
+5. List unresolved risks and required approvals.
+
+## Output
+Return a release package with sections for scope, risk, validation, rollback, monitoring, and approvals.
+```
+
+Good Skill candidates:
+
+- `pr-review`: standard pull request review checklist
+- `write-tests`: test generation rules for the repository
+- `api-contract-review`: REST/GraphQL compatibility review
+- `threat-model`: lightweight security review for a change
+- `release-readiness`: release package and go/no-go checklist
+- `incident-triage`: alert investigation and timeline creation
+- `postmortem-draft`: incident retrospective template
+- `dependency-upgrade`: dependency update and validation workflow
+- `migration-playbook`: repeated migration steps across services
+- `documentation-update`: docs quality and navigation standards
+
+### Difference between `CLAUDE.md`, agents, Skills, commands, and hooks
+
+| Mechanism | Best for | Example |
+| --- | --- | --- |
+| `CLAUDE.md` | Persistent repository-wide instructions | “Always run `bundle exec jekyll build` for docs changes.” |
+| Subagent | Specialized role or persona | `security-reviewer` checks auth and data handling |
+| Skill | Reusable task workflow | `release-readiness` creates release package |
+| Slash command | Fast manual trigger | `/prepare-release 2026.05.03` |
+| Hook | Automatic lifecycle enforcement | Run formatter before commit or block unsafe commands |
+| MCP tool | External system integration | Read Jira ticket, GitHub PR, Datadog alert, or ServiceNow incident |
+
+### Slash commands: standardizing repeated requests
+
+Slash commands are useful for making agent usage predictable. They are essentially named workflows that users can invoke without rewriting a long prompt.
+
+Useful enterprise slash commands:
+
+| Command | Purpose |
+| --- | --- |
+| `/analyze-impact` | Identify impacted modules, APIs, data stores, tests, and teams |
+| `/write-tests` | Generate or improve tests for the current change |
+| `/review-pr` | Perform first-pass pull request review |
+| `/prepare-release` | Generate release notes, risk summary, and rollback checklist |
+| `/triage-incident` | Investigate alert context and recommend runbook actions |
+| `/draft-adr` | Create an architecture decision record draft |
+| `/security-check` | Review security implications of a change |
+| `/update-docs` | Update documentation related to code changes |
+
+Example command behavior for `/prepare-release`:
+
+1. Read related issues and pull requests.
+2. Summarize functional scope.
+3. Identify changed services and configuration.
+4. Collect CI and security scan evidence.
+5. Identify deployment dependencies and feature flags.
+6. Generate rollback plan.
+7. Generate SRE monitoring checklist.
+8. Ask for human approval before any deployment action.
+
+### Hooks: enforcing guardrails automatically
+
+Hooks help enforce enterprise policy around agent behavior. Use hooks to automate checks before or after important agent lifecycle events.
+
+Examples:
+
+| Hook moment | Enterprise use |
+| --- | --- |
+| Before tool execution | Block dangerous commands, require approval for production access |
+| After file edit | Run formatter or detect secret patterns |
+| Before commit | Run tests, lint, dependency checks, and license checks |
+| Before PR creation | Require PR summary, validation evidence, and risk statement |
+| Before deployment | Require change ticket, approvals, rollback plan, and monitoring link |
+| After incident analysis | Store timeline and action items in incident system |
+
+Hook design principles:
+
+- Keep hooks deterministic.
+- Make failures clear and actionable.
+- Do not hide policy decisions inside prompts only.
+- Prefer policy-as-code for security and compliance gates.
+- Require human approval for irreversible or production-impacting actions.
+
+### MCP and enterprise integrations
+
+Model Context Protocol (MCP) integrations make Claude Code more useful by connecting agents to approved systems. MCP should be governed like any other integration layer.
+
+Common enterprise MCP integrations:
+
+- GitHub or GitLab for issues, branches, PRs, code search, and CI status
+- Jira or Azure Boards for backlog and requirements
+- ServiceNow for change records and incidents
+- Backstage for service catalog and ownership
+- Datadog, Grafana, Prometheus, Splunk, or OpenSearch for observability
+- Snyk, Semgrep, CodeQL, Dependabot, or internal scanners for security
+- Argo CD, Flux, Spinnaker, or Jenkins for deployment status
+- Confluence or internal docs for runbooks and standards
+
+Controls for MCP:
+
+- Use read-only access first.
+- Scope tokens by system, repository, and environment.
+- Redact secrets from tool results.
+- Log tool requests and responses where allowed.
+- Add approval gates before write actions.
+- Separate development MCP tools from production MCP tools.
+
+### Example: Claude Code operating model for a feature
+
+```mermaid
+sequenceDiagram
+    participant PO as Product Owner
+    participant CC as Claude Code
+    participant Dev as Developer
+    participant Git as Git Platform
+    participant CI as CI/CD
+    participant Sec as Security Agent
+    participant SRE as SRE Agent
+
+    PO->>CC: Ask /analyze-impact for new feature
+    CC->>CC: Read CLAUDE.md conventions
+    CC->>Dev: Propose implementation plan
+    Dev->>CC: Approve scoped plan
+    CC->>Git: Create branch and implement change
+    CC->>CI: Run tests and build
+    CC->>Sec: Invoke security-reviewer
+    Sec-->>CC: Return findings and fixes
+    CC->>SRE: Invoke release-readiness skill
+    SRE-->>CC: Return monitoring and rollback checklist
+    CC->>Git: Open PR with validation evidence
+    Dev->>Git: Human review and approval
+```
+
+### Example: Claude Code SRE incident triage flow
+
+1. User invokes `/triage-incident INC12345`.
+2. Claude reads `CLAUDE.md` for incident conventions and escalation rules.
+3. `sre-triage` agent gathers service ownership, recent deployments, dashboards, logs, and traces.
+4. `incident-triage` Skill produces impact summary, suspected cause, evidence, and next steps.
+5. Hook blocks production remediation unless the incident commander approves.
+6. After approval, the agent can execute an approved runbook step or prepare the exact command for an SRE to run.
+7. `postmortem-draft` Skill prepares timeline, root cause hypotheses, contributing factors, and action items.
+
+### Example: building a Claude Code convention library
+
+A mature enterprise should maintain a reusable convention library:
+
+```text
+platform-agent-standards/
+  claude/
+    base-CLAUDE.md
+    agents/
+      code-reviewer.md
+      security-reviewer.md
+      test-engineer.md
+      release-manager.md
+      sre-triage.md
+    skills/
+      release-readiness/
+        SKILL.md
+      incident-triage/
+        SKILL.md
+      api-contract-review/
+        SKILL.md
+      threat-model/
+        SKILL.md
+    commands/
+      prepare-release.md
+      review-pr.md
+      triage-incident.md
+    hooks/
+      policy-checks.md
+      command-approval.md
+```
+
+Adoption model:
+
+1. Platform team creates baseline conventions.
+2. Security and SRE teams add mandatory guardrails.
+3. Application teams copy or inherit the baseline into repositories.
+4. Teams add domain-specific details to local `CLAUDE.md`.
+5. Failed or risky agent outcomes become updates to conventions, Skills, or hooks.
+6. Metrics track which conventions improve quality and delivery time.
+
+### How to decide whether to use an agent, Skill, command, or hook
+
+| Need | Best mechanism |
+| --- | --- |
+| “Always follow this repository rule.” | `CLAUDE.md` |
+| “Use a specialist reviewer for this type of work.” | Subagent |
+| “Repeat this multi-step process across teams.” | Skill |
+| “Let users trigger this workflow quickly.” | Slash command |
+| “Automatically enforce this policy.” | Hook |
+| “Read or update an external enterprise system.” | MCP tool |
+
+### Claude Code maturity roadmap
+
+| Stage | Practices |
+| --- | --- |
+| Beginner | One `CLAUDE.md`, manual prompts, read-only review tasks |
+| Team adoption | Shared commands, basic subagents, project Skills, PR summaries |
+| Enterprise governance | Standard agent library, Skills for release/security/SRE, hooks for policy checks |
+| Platform integration | MCP integrations with Jira, GitHub, CI/CD, observability, ServiceNow |
+| Controlled autonomy | Low-risk automated fixes and runbook actions with approval and audit logs |
+
+
+## 8. Managing Development and Deployment with Agents
 
 ### Agent-assisted software delivery lifecycle
 
@@ -448,7 +821,7 @@ flowchart LR
 - Toil identification
 - Post-incident action item tracking
 
-## 8. SRE Example: Agent-Assisted Incident Triage
+## 9. SRE Example: Agent-Assisted Incident Triage
 
 Scenario: API latency increases after a new deployment.
 
@@ -474,7 +847,7 @@ Example output expected from the agent:
 - Required approval: incident commander
 - Evidence: deployment ID, dashboard link, top trace IDs, error log samples
 
-## 9. Product Release Example: Agent-Assisted Release Management
+## 10. Product Release Example: Agent-Assisted Release Management
 
 Scenario: A team is releasing a new customer onboarding workflow.
 
@@ -503,7 +876,7 @@ Release maturity pattern:
 6. Release manager approves deployment.
 7. Agent monitors deployment and posts health summaries.
 
-## 10. Controls Required for Enterprise Adoption
+## 11. Controls Required for Enterprise Adoption
 
 ### Security controls
 
@@ -541,7 +914,7 @@ Release maturity pattern:
 - Record incident decisions.
 - Add automatic rollback only after strong maturity is demonstrated.
 
-## 11. Maturity Model for Coding Agents
+## 12. Maturity Model for Coding Agents
 
 | Level | Name | Characteristics | Recommended focus |
 | --- | --- | --- | --- |
@@ -552,7 +925,7 @@ Release maturity pattern:
 | 4 | SRE augmentation | Agents triage incidents and recommend runbook actions | Observability integration, incident timelines, approval workflows |
 | 5 | Governed autonomy | Agents execute low-risk approved actions automatically | Risk scoring, automatic rollback, continuous learning |
 
-## 12. Metrics to Track
+## 13. Metrics to Track
 
 ### Delivery metrics
 
@@ -587,7 +960,7 @@ Release maturity pattern:
 - Policy violation rate
 - Secret exposure attempts blocked
 
-## 13. Practical Enterprise Rollout Plan
+## 14. Practical Enterprise Rollout Plan
 
 ### Phase 1: Foundation
 
@@ -625,7 +998,7 @@ Release maturity pattern:
 - Continuously evaluate quality, safety, and business outcomes.
 - Expand autonomy only where metrics prove reliability.
 
-## 14. Example Agent Operating Model
+## 15. Example Agent Operating Model
 
 | Role | Human owner | Agent support |
 | --- | --- | --- |
@@ -637,7 +1010,7 @@ Release maturity pattern:
 | Release manager | Owns release coordination | Builds release package and deployment checklist |
 | SRE | Owns reliability and operations | Triage, runbook recommendations, postmortem drafts |
 
-## 15. Common Anti-Patterns
+## 16. Common Anti-Patterns
 
 - Giving agents broad production access too early
 - Accepting generated code without human review
@@ -650,7 +1023,7 @@ Release maturity pattern:
 - Running agents with long-lived credentials
 - Automating remediation without runbooks
 
-## 16. Definition of Done for Agent-Generated Changes
+## 17. Definition of Done for Agent-Generated Changes
 
 A mature team should require:
 
@@ -665,7 +1038,7 @@ A mature team should require:
 - Observability updates for production changes
 - Audit record of agent actions
 
-## 17. Summary
+## 18. Summary
 
 Coding agents can significantly mature enterprise delivery when they are treated as governed engineering automation. The safest adoption path is incremental: start with documentation and test generation, move to pull-request automation, then release support, then SRE augmentation, and only later limited autonomous operations.
 
